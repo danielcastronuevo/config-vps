@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configura tu partido</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <h2><i class="fa-solid fa-table-tennis-paddle-ball"></i> Configura tu partido</h2>
+
+<div class="separator"></div>
+
+    
+    <!-- Estado de la cancha -->
+    <div id="estado-cancha" class="cancha-libre">
+      <span class="led"></span>
+      <span class="texto-estado">CANCHA DISPONIBLE</span>
+    </div>
+
+<div id="cancha-msg" class="cancha-mensaje" style="display:none;">
+  <p><i class="fa-solid fa-circle-exclamation"></i>
+Partido en curso. Espere a que finalice para configurar uno nuevo. No recargue ni cierre esta página, de lo contrario deberá completar nuevamente el formulario.</p>
+</div>
+  </div>
+
+
+</header>
+
+
+
+
+<main>
+  <!-- Paso 1: Nombres y pulseras -->
+  <section class="step active" id="step1">
+    <div class="card">
+      <h3>Pareja 1</h3>
+      <input type="text" id="p1j1" placeholder="Jugador/a 1">
+      <input type="text" id="p1j2" placeholder="Jugador/a 2">
+      <label>Pulsera:</label>
+      <select id="bracelet-team1" required>
+        <option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>
+        <option value="roja">Roja</option>
+        <option value="azul">Azul</option>
+        <option value="verde">Verde</option>
+        <option value="amarilla">Amarilla</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h3>Pareja 2</h3>
+      <input type="text" id="p2j1" placeholder="Jugador/a 3">
+      <input type="text" id="p2j2" placeholder="Jugador/a 4">
+      <label>Pulsera:</label>
+      <select id="bracelet-team2" required>
+        <option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>
+        <option value="roja">Roja</option>
+        <option value="azul">Azul</option>
+        <option value="verde">Verde</option>
+        <option value="amarilla">Amarilla</option>
+      </select>
+    </div>
+
+    <div class="error-msg" id="step1-error"><i class="fa-solid fa-triangle-exclamation"></i> Ningún campo puede quedar vacío ni repetido.</div>
+
+    <div class="nav-buttons">
+      <button class="next" id="step1-next" disabled>Siguiente</button>
+    </div>
+  </section>
+
+  <!-- Paso 2: Sacadores -->
+  <!--  <section class="step" id="step2">
+    <div class="card">
+      <h3>Elegir sacadores de cada Pareja</h3>
+      <div class="separator"></div>
+
+      <h4>Pareja 1</h4>
+      <select id="sacador1" required>
+        <option value="" disabled selected hidden class="placeholder">Seleccionar Sacador</option>
+      </select>
+
+      <div class="separator"></div>
+
+      <h4>Pareja 2</h4>
+      <select id="sacador2" required>
+        <option value="" disabled selected hidden class="placeholder">Seleccionar Sacador</option>
+      </select>
+
+      <div class="error-msg" id="step2-error"><i class="fa-solid fa-triangle-exclamation"></i> Debes seleccionar un sacador para cada pareja.</div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="prev">Volver</button>
+      <button class="next" id="step2-next" disabled>Siguiente</button>
+    </div>
+  </section>
+-->
+
+  <!-- Paso 3: Modos de juego -->
+  <section class="step" id="step3">
+    <div class="card">
+      <h3>Tiempo de calentamiento</h3>
+      <label><input type="radio" name="calentamiento" value="0" required> Sin calentamiento</label>
+      <label><input type="radio" name="calentamiento" value="5"> 5 minutos</label>
+      <label><input type="radio" name="calentamiento" value="10"> 10 minutos</label>
+    </div>
+
+    <div class="card">
+      <h3>Cambio de lado</h3>
+      <label><input type="radio" name="cambio" value="set" required> Al finalizar cada SET</label>
+      <label><input type="radio" name="cambio" value="tradicional"> Tradicional (impares)</label>
+      <label><input type="radio" name="cambio" value="ninguno"> Sin cambios</label>
+    </div>
+
+    <div class="card">
+      <h3>Games</h3>
+      <label><input type="radio" name="games" value="punto-oro" required> Punto de oro</label>
+      <label><input type="radio" name="games" value="deuce"> Deuce / Advantage</label>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="prev">Volver</button>
+      <button class="next" id="step3-next">Siguiente</button>
+    </div>
+  </section>
+
+  <!-- Paso 4: Duración y comienzo -->
+  <section class="step" id="step4">
+    <div class="card">
+      <h3>Duración del partido</h3>
+      <select id="duracion" required>
+        <option value="30">30 minutos</option>
+        <option value="60">1 hora</option>
+        <option value="90">1 hora y media</option>
+        <option value="120">2 horas</option>
+      </select>
+    </div>
+
+
+<div class="card">
+  <h3>Inicio y finalización del partido</h3>
+  <label>Hora de inicio:</label>
+<select id="inicio-partido"></select>
+  <label>Hora de finalización:</label>
+  <input type="text" id="fin-partido" readonly>
+</div>
+
+
+    <div class="nav-buttons">
+      <button class="prev">Volver</button>
+      <button class="finish">Finalizar</button>
+    </div>
+  </section>
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
