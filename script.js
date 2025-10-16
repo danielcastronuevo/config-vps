@@ -117,7 +117,7 @@ function setEstadoCancha(ocupada) {
   if(ocupada){
     estadoCancha.classList.remove("cancha-libre");
     estadoCancha.classList.add("cancha-ocupada");
-    estadoCancha.querySelector(".texto-estado").textContent = "CANCHA OCUPADA";
+    estadoCancha.querySelector(".texto-estado").textContent = "CANCHA NO DISPONIBLE";
     canchaMsg.style.display = "flex";
   } else {
     estadoCancha.classList.remove("cancha-ocupada");
