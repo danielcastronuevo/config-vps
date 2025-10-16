@@ -7,14 +7,14 @@ module.exports = function(io, raspySockets) {
     const { raspy_id, datos } = req.body;
 
     if (!raspy_id || !datos) {
-      return res.status(400).json({ error: 'Faltan raspy_id o datos' });
+      return res.status(400).json({ error: 'Faltan id o datos' });
     }
 
     const socketRaspy = raspySockets[raspy_id];
 
     if (!socketRaspy || !socketRaspy.connected) {
-      console.log(`❌ Raspy ${raspy_id} no conectada`);
-      return res.status(400).json({ error: `Raspy ${raspy_id} no conectada` });
+      console.log(`❌ Dispositivo ${raspy_id} no conectado`);
+      return res.status(400).json({ error: `Dispositivo ${raspy_id} no conectado` });
     }
 
     console.log(`📤 Enviando datos a ${raspy_id}:`, datos);
