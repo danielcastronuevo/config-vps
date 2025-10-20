@@ -288,7 +288,7 @@ input.error, select.error {
   cursor: default;        /* Cursor normal, no de escritura */
 }
 
-/*CANCHA DESCONECTADA*/
+/*CANCHA DESCONECTADA o CHEQUEANDO*/
 
 .cancha-desconectada {
   background-color: #777;
@@ -296,4 +296,16 @@ input.error, select.error {
 }
 .cancha-desconectada .led {
   background-color: gray;
+}
+
+
+.cancha-check {
+  background-color: #fffbe6; /* fondo suave tipo "esperando" */
+  color: #b58b00; /* texto amarillento */
+  border: 2px solid #b58b00;
+}
+
+.cancha-check .led {
+  background-color: #ffcc00; /* led amarillo */
+  box-shadow: 0 0 10px #ffcc00;
 }

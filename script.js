@@ -42,7 +42,9 @@ setTimeout(() => {
 
 // ===================== CANCHA DESCONECTADA =====================
 function setEstadoCanchaDesconectada() {
-  estadoCancha.classList.remove("cancha-libre", "cancha-ocupada");
+  // 🔹 Limpieza de estados previos
+  estadoCancha.classList.remove("cancha-libre", "cancha-ocupada", "cancha-check");
+
   estadoCancha.classList.add("cancha-desconectada");
   estadoCancha.querySelector(".texto-estado").textContent = "SIN CONEXIÓN";
   canchaMsg.style.display = "none";
@@ -155,8 +157,8 @@ function validateFinalizar() {
 function setEstadoCancha(ocupada) {
   canchaOcupada = ocupada;
 
-  // 🔹 Limpieza de estado previo "desconectado"
-  estadoCancha.classList.remove("cancha-desconectada");
+  // 🔹 Limpieza de estados previos
+  estadoCancha.classList.remove("cancha-desconectada", "cancha-check");
 
   if (ocupada) {
     estadoCancha.classList.remove("cancha-libre");
