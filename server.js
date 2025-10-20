@@ -64,6 +64,8 @@ io.on('connection', (socket) => {
     }
   });
 
+
+
   // Desconexión
   socket.on('disconnect', () => {
     // Si era una Raspy
@@ -71,6 +73,16 @@ io.on('connection', (socket) => {
       if (s.id === socket.id) {
         delete raspySockets[id];
         console.log(`🔴 ID desconectada: ${id}`);
+
+        // 🔹 Avisar a todos los clientes que consultaban esta Raspy
+        for (const [clienteId, idRaspy] of Object.entries(clientesConfig)) {
+          if (idRaspy === id) {
+            io.to(clienteId).emit(`estado_cancha_${id}`, { enEspera: null });
+          }
+        }
+
+        // 🔹 Limpiar su estado actual
+        delete estadoCanchaActual[id];
         break;
       }
     }
@@ -81,6 +93,7 @@ io.on('connection', (socket) => {
       delete clientesConfig[socket.id];
     }
   });
+
 });
 
 server.listen(PORT, () => {
