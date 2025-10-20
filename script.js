@@ -57,13 +57,14 @@ setInterval(() => {
 
 // ===================== CANCHA DESCONECTADA =====================
 function setEstadoCanchaDesconectada() {
-  // 🔹 Limpieza de estados previos
   estadoCancha.classList.remove("cancha-libre", "cancha-ocupada", "cancha-check");
-
   estadoCancha.classList.add("cancha-desconectada");
   estadoCancha.querySelector(".texto-estado").textContent = "SIN CONEXIÓN";
   canchaMsg.style.display = "none";
+
+  finishBtn.disabled = true; // 🔹 nunca permitir enviar si no hay conexión
 }
+
 
 // ===================== DETECCIÓN DE CONEXIÓN =====================
 
@@ -170,6 +171,7 @@ function validateFinalizar() {
 }
 
 
+
 function setEstadoCancha(ocupada) {
   canchaOcupada = ocupada;
 
@@ -188,9 +190,9 @@ function setEstadoCancha(ocupada) {
     canchaMsg.style.display = "none";
   }
 
-  validateFinalizar();
+  // 🔹 Bloquear botón Finalizar si la cancha no está libre
+  finishBtn.disabled = canchaOcupada || !duracionSelect.value;
 }
-
 
 // ===================== STEP 1 =====================
 
