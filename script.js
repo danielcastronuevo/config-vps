@@ -21,11 +21,17 @@ socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
   estadoRecibido = true;
 
   if (data.enEspera === false) {
+    // Partido en curso
     setEstadoCancha(true);
-  } else {
+  } else if (data.enEspera === true) {
+    // Cancha libre
     setEstadoCancha(false);
+  } else {
+    // Raspy no responde o campo ausente
+    setEstadoCanchaDesconectada();
   }
 });
+
 
 // Si no se recibe estado en los primeros 3 segundos => sin conexión inicial
 setTimeout(() => {
