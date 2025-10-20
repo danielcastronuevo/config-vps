@@ -288,4 +288,12 @@ input.error, select.error {
   cursor: default;        /* Cursor normal, no de escritura */
 }
 
+/*CANCHA DESCONECTADA*/
 
+.cancha-desconectada {
+  background-color: #777;
+  color: #fff;
+}
+.cancha-desconectada .led {
+  background-color: gray;
+}

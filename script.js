@@ -9,11 +9,15 @@ if (!RASPY_ID) {
 
 const socket = io();
 
+let estadoRecibido = false; // <-- nuevo
+
 // Avisamos al servidor qué Raspy queremos recibir
 socket.emit('consultar_raspy', { raspy_id: RASPY_ID });
 
+// Escuchamos el estado de cancha
 socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
   console.log("📡 Estado recibido desde VPS:", data);
+  estadoRecibido = true; // <-- marcamos que llegó info
 
   if (data.enEspera === false) {
     setEstadoCancha(true); // muestra CANCHA OCUPADA
@@ -21,6 +25,22 @@ socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
     setEstadoCancha(false); // muestra CANCHA DISPONIBLE
   }
 });
+
+// Si no se recibe estado en los primeros 3 segundos => sin conexión
+setTimeout(() => {
+  if (!estadoRecibido) {
+    setEstadoCanchaDesconectada();
+  }
+}, 3000);
+
+// ===================== FUNCIÓN PARA DETECTAR CANCHA DESCONECTADA =====================
+function setEstadoCanchaDesconectada() {
+  estadoCancha.classList.remove("cancha-libre", "cancha-ocupada");
+  estadoCancha.classList.add("cancha-desconectada");
+  estadoCancha.querySelector(".texto-estado").textContent = "SIN CONEXIÓN";
+  canchaMsg.style.display = "none";
+}
+
 
 // ===================== VARIABLES GLOBALES =====================
 const step1NextBtn = document.getElementById("step1-next");
