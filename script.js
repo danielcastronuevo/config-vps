@@ -11,12 +11,14 @@ if (!RASPY_ID) {
 const socket = io();
 
 let estadoRecibido = false;
+let ultimaRespuesta = Date.now();
 
 // Avisamos al servidor qué Raspy queremos recibir
-socket.emit('consultar_raspy', { raspy_id: RASPY_ID });
+socket.emit("consultar_raspy", { raspy_id: RASPY_ID });
 
 // Escuchamos el estado de cancha
 socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
+  ultimaRespuesta = Date.now(); // ✅ llegó algo, actualizamos timestamp
   console.log("📡 Estado recibido desde VPS:", data);
   estadoRecibido = true;
 
@@ -32,13 +34,26 @@ socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
   }
 });
 
-
 // Si no se recibe estado en los primeros 3 segundos => sin conexión inicial
 setTimeout(() => {
   if (!estadoRecibido) {
     setEstadoCanchaDesconectada();
   }
 }, 3000);
+
+// ===================== PING PERIÓDICO =====================
+// Cada X segundos pedimos el estado actual de la Raspy al servidor
+const INTERVALO_PING = 5000; // 5 segundos
+
+setInterval(() => {
+  socket.emit("consultar_raspy", { raspy_id: RASPY_ID });
+
+  // Si pasaron más de 10 segundos sin respuesta, marcamos sin conexión
+  if (Date.now() - ultimaRespuesta > 10000) {
+    console.warn("⚠️ No se recibió respuesta del marcador en los últimos 10s");
+    setEstadoCanchaDesconectada();
+  }
+}, INTERVALO_PING);
 
 // ===================== CANCHA DESCONECTADA =====================
 function setEstadoCanchaDesconectada() {
@@ -61,8 +76,9 @@ socket.on("disconnect", () => {
 // Cuando el socket vuelve a conectar
 socket.on("connect", () => {
   console.log("🟢 Reconectado con el servidor");
-  socket.emit('consultar_raspy', { raspy_id: RASPY_ID });
+  socket.emit("consultar_raspy", { raspy_id: RASPY_ID });
 });
+
 
 // ===================== VARIABLES GLOBALES =====================
 const step1NextBtn = document.getElementById("step1-next");
