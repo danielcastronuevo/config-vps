@@ -1,3 +1,4 @@
+
 // SOCKET IO ============================================
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -9,7 +10,7 @@ if (!RASPY_ID) {
 
 const socket = io();
 
-let estadoRecibido = false; // <-- nuevo
+let estadoRecibido = false;
 
 // Avisamos al servidor qué Raspy queremos recibir
 socket.emit('consultar_raspy', { raspy_id: RASPY_ID });
@@ -17,23 +18,23 @@ socket.emit('consultar_raspy', { raspy_id: RASPY_ID });
 // Escuchamos el estado de cancha
 socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
   console.log("📡 Estado recibido desde VPS:", data);
-  estadoRecibido = true; // <-- marcamos que llegó info
+  estadoRecibido = true;
 
   if (data.enEspera === false) {
-    setEstadoCancha(true); // muestra CANCHA OCUPADA
+    setEstadoCancha(true);
   } else {
-    setEstadoCancha(false); // muestra CANCHA DISPONIBLE
+    setEstadoCancha(false);
   }
 });
 
-// Si no se recibe estado en los primeros 3 segundos => sin conexión
+// Si no se recibe estado en los primeros 3 segundos => sin conexión inicial
 setTimeout(() => {
   if (!estadoRecibido) {
     setEstadoCanchaDesconectada();
   }
 }, 3000);
 
-// ===================== FUNCIÓN PARA DETECTAR CANCHA DESCONECTADA =====================
+// ===================== CANCHA DESCONECTADA =====================
 function setEstadoCanchaDesconectada() {
   estadoCancha.classList.remove("cancha-libre", "cancha-ocupada");
   estadoCancha.classList.add("cancha-desconectada");
@@ -41,6 +42,19 @@ function setEstadoCanchaDesconectada() {
   canchaMsg.style.display = "none";
 }
 
+// ===================== DETECCIÓN DE CONEXIÓN =====================
+
+// Cuando el socket se desconecta del servidor (por caída de VPS o red)
+socket.on("disconnect", () => {
+  console.warn("🔴 Conexión Socket.IO perdida");
+  setEstadoCanchaDesconectada();
+});
+
+// Cuando el socket vuelve a conectar
+socket.on("connect", () => {
+  console.log("🟢 Reconectado con el servidor");
+  socket.emit('consultar_raspy', { raspy_id: RASPY_ID });
+});
 
 // ===================== VARIABLES GLOBALES =====================
 const step1NextBtn = document.getElementById("step1-next");
@@ -131,10 +145,14 @@ function validateFinalizar() {
   finishBtn.disabled = !(step4Valido && !canchaOcupada);
 }
 
+
 function setEstadoCancha(ocupada) {
   canchaOcupada = ocupada;
 
-  if(ocupada){
+  // 🔹 Limpieza de estado previo "desconectado"
+  estadoCancha.classList.remove("cancha-desconectada");
+
+  if (ocupada) {
     estadoCancha.classList.remove("cancha-libre");
     estadoCancha.classList.add("cancha-ocupada");
     estadoCancha.querySelector(".texto-estado").textContent = "CANCHA NO DISPONIBLE";
@@ -148,6 +166,7 @@ function setEstadoCancha(ocupada) {
 
   validateFinalizar();
 }
+
 
 // ===================== STEP 1 =====================
 
