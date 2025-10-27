@@ -204,7 +204,19 @@ function setEstadoCancha(ocupada) {
 // ===================== STEP 1 =====================
 
 function validateStep1() {
-  let valid = true;
+// ==================================================
+
+sendToServer(datosCompat); // con la función definida así:
+const sendToServer = (datos) => {
+  fetch('/api/config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos)
+  })
+  .then(res => res.json())
+  .then(console.log)
+  .catch(console.error);
+};  let valid = true;
   step1Error.style.display = "none";
   const values = [];
 
@@ -539,6 +551,8 @@ finishBtn.addEventListener("click", () => {
         mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
      }
 }
+
+saludoPrueba: "HOLA QUE TAL", // <- agregalo aquí
 
   };
 
