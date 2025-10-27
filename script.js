@@ -474,6 +474,9 @@ document.querySelectorAll(".prev").forEach(btn => btn.addEventListener("click", 
 // ==================================================
 
 finishBtn.addEventListener("click", () => {
+
+  updateFin();
+
   const datosCompat = {
     jugadores: [
       datosPartido.jugadores.pareja1.j1,
