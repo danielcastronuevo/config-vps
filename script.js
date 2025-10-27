@@ -112,6 +112,13 @@ const steps = document.querySelectorAll(".step");
 let current = 0;
 let canchaOcupada = false;
 
+let datosHorarios = {
+  inicioTexto: '',
+  finTexto: '',
+  inicioFecha: '',
+  finFecha: ''
+};
+
 let datosPartido = {
   jugadores: {
     pareja1: { j1: '', j2: '', pulsera: '' },
@@ -384,17 +391,30 @@ function updateInicioSelect() {
 }
 
 
+
 function updateFin() {
   if (!duracionSelect.value) {
     inputFin.value = '';
     return;
   }
+
   const [h, m] = inputInicio.value.split(':').map(Number);
   const inicio = new Date();
   inicio.setHours(h, m, 0, 0);
+
   const fin = new Date(inicio.getTime() + parseInt(duracionSelect.value) * 60000);
+
   inputFin.value = `${fin.getHours().toString().padStart(2,'0')}:${fin.getMinutes().toString().padStart(2,'0')}`;
+
+  // Guardamos los datos en datosHorarios
+  datosHorarios = {
+    inicioTexto: inputInicio.value,
+    finTexto: inputFin.value,
+    inicioFecha: inicio.toISOString(),
+    finFecha: fin.toISOString()
+  };
 }
+
 
 // Llamamos a esta función cada vez que cargamos Step4 o cada X segundos si queremos que se actualice dinámicamente
 setInterval(updateInicioSelect, 60000); // cada minuto
@@ -452,6 +472,7 @@ document.querySelectorAll(".prev").forEach(btn => btn.addEventListener("click", 
 // ==================================================
 // FINALIZAR Y ENVIAR AL SERVIDOR
 // ==================================================
+
 finishBtn.addEventListener("click", () => {
   const datosCompat = {
     jugadores: [
@@ -470,12 +491,8 @@ finishBtn.addEventListener("click", () => {
         datosPartido.jugadores.pareja2.j2
       ]
     },
-
-    parejaSacadora: "pareja1", // si querés podés dejarlo fijo o borrarlo
-
-    // 🔹 Sacadores vacío
+    parejaSacadora: "pareja1",
     sacadores: ["", ""],
-
     tiempoCalentamiento: (() => {
       switch (datosPartido.modosJuego.calentamiento) {
         case "0": return "Sin calentamiento";
@@ -499,32 +516,28 @@ finishBtn.addEventListener("click", () => {
         default: return "";
       }
     })(),
-
-    // 🔹 Orden de saque vacío
     ordenDeSaque: ["", "", "", ""],
-
-    // 🔹 Info de horarios
     duracion: `${datosPartido.duracion} minutos`,
-    comienzo: inputInicio.value,
-    fin: inputFin.value,
-
-
+    comienzo: datosHorarios.inicioTexto,
+    fin: datosHorarios.finTexto,
+    inicioFecha: datosHorarios.inicioFecha,
+    finFecha: datosHorarios.finFecha,
     pulseras: {
-     pareja1: {
-       nombre: datosPartido.jugadores.pareja1.pulsera,
+      pareja1: {
+        nombre: datosPartido.jugadores.pareja1.pulsera,
         mac: pulserasDisponibles[datosPartido.jugadores.pareja1.pulsera] || ""
-     },
-     pareja2: {
+      },
+      pareja2: {
         nombre: datosPartido.jugadores.pareja2.pulsera,
         mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
-     }
-}
-
+      }
+    }
   };
 
   console.log("🛠️ Partido configurado:", datosCompat);
   sendToServer(datosCompat);
 });
+
 
 
 // ==================================================
