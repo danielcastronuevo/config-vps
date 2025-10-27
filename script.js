@@ -56,6 +56,7 @@ setInterval(() => {
 }, INTERVALO_PING);
 
 // ===================== CANCHA DESCONECTADA =====================
+
 function setEstadoCanchaDesconectada() {
   estadoCancha.classList.remove("cancha-libre", "cancha-ocupada", "cancha-check");
   estadoCancha.classList.add("cancha-desconectada");
@@ -110,13 +111,6 @@ const radiosGames = document.getElementsByName("games");
 const steps = document.querySelectorAll(".step");
 let current = 0;
 let canchaOcupada = false;
-
-let datosHorarios = {
-  inicioTexto: '',
-  finTexto: '',
-  inicioFecha: '',
-  finFecha: ''
-};
 
 let datosPartido = {
   jugadores: {
@@ -389,6 +383,7 @@ function updateInicioSelect() {
   updateFin();
 }
 
+
 function updateFin() {
   if (!duracionSelect.value) {
     inputFin.value = '';
@@ -397,20 +392,9 @@ function updateFin() {
   const [h, m] = inputInicio.value.split(':').map(Number);
   const inicio = new Date();
   inicio.setHours(h, m, 0, 0);
-
   const fin = new Date(inicio.getTime() + parseInt(duracionSelect.value) * 60000);
-
   inputFin.value = `${fin.getHours().toString().padStart(2,'0')}:${fin.getMinutes().toString().padStart(2,'0')}`;
-
-  // Guardamos los datos detallados
-  datosHorarios = {
-    inicioTexto: inputInicio.value,
-    finTexto: inputFin.value,
-    inicioFecha: inicio.toISOString(),
-    finFecha: fin.toISOString()
-  };
 }
-
 
 // Llamamos a esta función cada vez que cargamos Step4 o cada X segundos si queremos que se actualice dinámicamente
 setInterval(updateInicioSelect, 60000); // cada minuto
@@ -520,27 +504,21 @@ finishBtn.addEventListener("click", () => {
     ordenDeSaque: ["", "", "", ""],
 
     // 🔹 Info de horarios
-
     duracion: `${datosPartido.duracion} minutos`,
-    comienzo: datosHorarios.inicioTexto,
-    fin: datosHorarios.finTexto,
-    inicioFecha: datosHorarios.inicioFecha,
-    finFecha: datosHorarios.finFecha,
+    comienzo: inputInicio.value,
+    fin: inputFin.value,
 
 
-
-
-pulseras: {
-  pareja1: {
-    nombre: datosPartido.jugadores.pareja1.pulsera,
-    mac: pulserasDisponibles[datosPartido.jugadores.pareja1.pulsera] || ""
-  },
-  pareja2: {
-    nombre: datosPartido.jugadores.pareja2.pulsera,
-    mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
-  }
-} // ✅ sin coma
-
+    pulseras: {
+     pareja1: {
+       nombre: datosPartido.jugadores.pareja1.pulsera,
+        mac: pulserasDisponibles[datosPartido.jugadores.pareja1.pulsera] || ""
+     },
+     pareja2: {
+        nombre: datosPartido.jugadores.pareja2.pulsera,
+        mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
+     }
+}
 
   };
 
