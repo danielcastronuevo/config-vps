@@ -204,8 +204,6 @@ function setEstadoCancha(ocupada) {
 // ===================== STEP 1 =====================
 
 function validateStep1() {
-// ==================================================
-
   let valid = true;
   step1Error.style.display = "none";
   const values = [];
