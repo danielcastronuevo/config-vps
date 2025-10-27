@@ -552,8 +552,6 @@ finishBtn.addEventListener("click", () => {
      }
 }
 
-saludoPrueba: "HOLA QUE TAL", // <- agregalo aquí
-
   };
 
   console.log("🛠️ Partido configurado:", datosCompat);
