@@ -529,16 +529,18 @@ finishBtn.addEventListener("click", () => {
 
 
 
-    pulseras: {
-     pareja1: {
-       nombre: datosPartido.jugadores.pareja1.pulsera,
-        mac: pulserasDisponibles[datosPartido.jugadores.pareja1.pulsera] || ""
-     },
-     pareja2: {
-        nombre: datosPartido.jugadores.pareja2.pulsera,
-        mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
-     }
-}
+
+pulseras: {
+  pareja1: {
+    nombre: datosPartido.jugadores.pareja1.pulsera,
+    mac: pulserasDisponibles[datosPartido.jugadores.pareja1.pulsera] || ""
+  },
+  pareja2: {
+    nombre: datosPartido.jugadores.pareja2.pulsera,
+    mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
+  }
+} // ✅ sin coma
+
 
   };
 
