@@ -392,21 +392,20 @@ function updateInicioSelect() {
 
 
 
-function updateFin() {
-  if (!duracionSelect.value) {
-    inputFin.value = '';
-    return;
-  }
 
-  const [h, m] = inputInicio.value.split(':').map(Number);
+function updateFin() {
+  const [h, m] = inputInicio.value.split(':').map(Number) || [0,0];
   const inicio = new Date();
   inicio.setHours(h, m, 0, 0);
 
-  const fin = new Date(inicio.getTime() + parseInt(duracionSelect.value) * 60000);
+  let fin = new Date(inicio);
+  if(duracionSelect.value) {
+    fin = new Date(inicio.getTime() + parseInt(duracionSelect.value)*60000);
+    inputFin.value = `${fin.getHours().toString().padStart(2,'0')}:${fin.getMinutes().toString().padStart(2,'0')}`;
+  } else {
+    inputFin.value = '';
+  }
 
-  inputFin.value = `${fin.getHours().toString().padStart(2,'0')}:${fin.getMinutes().toString().padStart(2,'0')}`;
-
-  // Guardamos los datos en datosHorarios
   datosHorarios = {
     inicioTexto: inputInicio.value,
     finTexto: inputFin.value,
@@ -414,6 +413,7 @@ function updateFin() {
     finFecha: fin.toISOString()
   };
 }
+
 
 
 // Llamamos a esta función cada vez que cargamos Step4 o cada X segundos si queremos que se actualice dinámicamente
