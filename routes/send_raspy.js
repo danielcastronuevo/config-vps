@@ -1,3 +1,4 @@
+
 const express = require('express');
 
 module.exports = function(io, raspySockets) {
@@ -17,7 +18,9 @@ module.exports = function(io, raspySockets) {
       return res.status(400).json({ error: `Dispositivo ${raspy_id} no conectado` });
     }
 
-    console.log("🛠️ Partido configurado:", JSON.stringify(datosCompat, null, 2));
+    // ✅ Loguear el objeto que realmente llegó al servidor
+    console.log("🛠️ Partido configurado recibido en el servidor:", JSON.stringify(datos, null, 2));
+
     // Emitimos evento específico para esa Raspy
     socketRaspy.emit(`config_${raspy_id}`, datos);
 
@@ -26,3 +29,4 @@ module.exports = function(io, raspySockets) {
 
   return router;
 };
+
