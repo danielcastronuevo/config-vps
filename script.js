@@ -535,7 +535,7 @@ finishBtn.addEventListener("click", () => {
         mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
       }
     },
-    mensaje: "actualizado_sin_cache" // <- ahora sí, dentro del objeto
+    mensaje: "actualizado_sin_cache_v2" // <- Mensaje de pruebas de caché 
   };
 
 
