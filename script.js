@@ -534,8 +534,10 @@ finishBtn.addEventListener("click", () => {
         nombre: datosPartido.jugadores.pareja2.pulsera,
         mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
       }
-    }
+    },
+    mensaje: "actualizado_sin_cache" // <- ahora sí, dentro del objeto
   };
+
 
   console.log("🛠️ Partido configurado:", datosCompat);
   sendToServer(datosCompat);
