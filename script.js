@@ -17,9 +17,17 @@ const socket = io();
 
 let estadoRecibido = false;
 let ultimaRespuesta = Date.now();
+let pulserasEnUsoActual = []; // 🔹 Tracking de pulseras en uso
 
 // Avisamos al servidor qué Raspy queremos recibir
 socket.emit("consultar_raspy", { raspy_id: RASPY_ID });
+
+// 🔹 Escuchar qué pulseras están en uso en el club
+socket.on(`pulseras_en_uso_${CLUB}`, (data) => {
+  pulserasEnUsoActual = data.pulserasEnUso || [];
+  console.log(`📡 Pulseras en uso en ${CLUB}:`, pulserasEnUsoActual);
+  actualizarEstadoPulseras(); // Deshabilitar/habilitar opciones
+});
 
 // Escuchamos el estado de cancha
 socket.on(`estado_cancha_${RASPY_ID}`, (data) => {
@@ -183,6 +191,32 @@ function llenarPulseras() {
       sel.appendChild(opt);
     });
   });
+
+  // 🔹 Aplicar estado inicial de pulseras en uso
+  actualizarEstadoPulseras();
+}
+
+// 🔹 Deshabilitar/habilitar opciones de pulseras según las que estén en uso
+function actualizarEstadoPulseras() {
+  selectsStep1.forEach(sel => {
+    Array.from(sel.options).forEach(opt => {
+      if (opt.value) { // No deshabilitar la opción vacía
+        if (pulserasEnUsoActual.includes(opt.value)) {
+          opt.disabled = true;
+          opt.textContent = opt.textContent.split('(')[0].trim() + ' (EN USO) (' + opt.textContent.split('(')[1];
+        } else {
+          opt.disabled = false;
+          // Restaurar nombre original sin "(EN USO)"
+          const nombre = opt.value;
+          const mac = pulserasDisponibles[nombre];
+          opt.textContent = `${nombre} (${mac})`;
+        }
+      }
+    });
+  });
+
+  // 🔹 Validar que la selección actual siga siendo válida
+  validateStep1();
 }
 
 

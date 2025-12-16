@@ -19,12 +19,15 @@ const raspySockets = {};       // raspy_id => socket
 const raspyClubs = {};    // raspy_id => club  [NUEVO]
 const clientesConfig = {};     // socket.id => raspy_id
 const estadoCanchaActual = {}; // raspy_id => { enEspera: true/false, ... }
+const pulserasEnUsoPorClub = {}; // club => Set de pulseras en uso
+const pulserasPorRaspy = {};   // raspy_id => Set de pulseras que configuró
 
 // ====================================
 // Rutas para enviar datos a Raspy
 // ====================================
 const sendRaspyRoutes = require('./routes/send_raspy');
-app.use('/api/send_raspy', sendRaspyRoutes(io, raspySockets, raspyClubs));
+const sendRaspyRouter = sendRaspyRoutes(io, raspySockets, raspyClubs, pulserasEnUsoPorClub, pulserasPorRaspy);
+app.use('/api/send_raspy', sendRaspyRouter);
 
 // ====================================
 // Conexión de clientes (Raspys u otros)
@@ -42,11 +45,18 @@ io.on('connection', (socket) => {
   // Registrar clientes de configuración que quieren ver una Raspy específica
   socket.on('consultar_raspy', ({ raspy_id }) => {
     clientesConfig[socket.id] = raspy_id;
+    const club = raspyClubs[raspy_id];
     console.log(`📡 Cliente ${socket.id} consulta ID: ${raspy_id}`);
 
     // Enviar inmediatamente el estado actual si existe
     if (estadoCanchaActual[raspy_id]) {
       socket.emit(`estado_cancha_${raspy_id}`, estadoCanchaActual[raspy_id]);
+    }
+
+    // 🔹 Enviar pulseras en uso del club
+    if (club) {
+      const pulserasEnUso = Array.from(pulserasEnUsoPorClub[club] || []);
+      socket.emit(`pulseras_en_uso_${club}`, { pulserasEnUso });
     }
   });
 
@@ -57,6 +67,11 @@ io.on('connection', (socket) => {
 
     // Guardar estado actual en la VPS
     estadoCanchaActual[raspy_id] = { enEspera, estado };
+
+    // 🔹 Si el partido terminó (enEspera = true), liberar pulseras y cancelar timeout
+    if (enEspera === true && pulserasPorRaspy[raspy_id]) {
+      sendRaspyRouter.liberarPulseras(raspy_id, '✅ Partido finalizado (confirmado por Raspy)');
+    }
 
     // 🔹 Reenviar solo a clientes que consultan esta raspy
     for (const [clienteId, idRaspy] of Object.entries(clientesConfig)) {
@@ -73,6 +88,7 @@ io.on('connection', (socket) => {
     // Si era una Raspy
     for (const [id, s] of Object.entries(raspySockets)) {
       if (s.id === socket.id) {
+        const club = raspyClubs[id];
         delete raspySockets[id];
         console.log(`🔴 ID desconectada: ${id}`);
 
@@ -83,8 +99,11 @@ io.on('connection', (socket) => {
           }
         }
 
-        // 🔹 Limpiar su estado actual
+        // 🔹 Limpiar su estado actual y liberar pulseras
         delete estadoCanchaActual[id];
+        if (pulserasPorRaspy[id]) {
+          sendRaspyRouter.liberarPulseras(id, '🔌 Raspy desconectada - Liberando pulseras de seguridad');
+        }
         break;
       }
     }
