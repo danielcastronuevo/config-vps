@@ -3,9 +3,14 @@
 
 const urlParams = new URLSearchParams(window.location.search);
 const RASPY_ID = urlParams.get("id");
+const CLUB = urlParams.get("club");
 
 if (!RASPY_ID) {
   alert("Error: no se recibió el ID de la Raspy.");
+}
+
+if (!CLUB) {
+  alert("Error: no se recibió el club.");
 }
 
 const socket = io();
@@ -151,7 +156,15 @@ window.addEventListener("DOMContentLoaded", () => {
   fetch("bracelets.json")
     .then(r => r.json())
     .then(data => {
-      pulserasDisponibles = data;
+      // Filtrar pulseras solo del club seleccionado
+      if (data[CLUB]) {
+        pulserasDisponibles = data[CLUB];
+        console.log(`📿 Pulseras cargadas para club: ${CLUB}`, pulserasDisponibles);
+      } else {
+        console.error(`❌ Club "${CLUB}" no encontrado en bracelets.json`);
+        alert(`Error: Club "${CLUB}" no está configurado`);
+        return;
+      }
       llenarPulseras();
     })
     .catch(err => console.error("Error cargando pulseras:", err));
@@ -162,6 +175,7 @@ window.addEventListener("DOMContentLoaded", () => {
 function llenarPulseras() {
   selectsStep1.forEach(sel => {
     sel.innerHTML = '<option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>';
+    // Ahora pulserasDisponibles es un objeto con { "A01": "MAC", "A02": "MAC", ... }
     Object.entries(pulserasDisponibles).forEach(([nombre, mac]) => {
       const opt = document.createElement("option");
       opt.value = nombre;

@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname)));
 // Registro de Raspys conectadas y clientes
 // ====================================
 const raspySockets = {};       // raspy_id => socket
+const raspyClubs = {};    // raspy_id => club  [NUEVO]
 const clientesConfig = {};     // socket.id => raspy_id
 const estadoCanchaActual = {}; // raspy_id => { enEspera: true/false, ... }
 
@@ -23,7 +24,7 @@ const estadoCanchaActual = {}; // raspy_id => { enEspera: true/false, ... }
 // Rutas para enviar datos a Raspy
 // ====================================
 const sendRaspyRoutes = require('./routes/send_raspy');
-app.use('/api/send_raspy', sendRaspyRoutes(io, raspySockets));
+app.use('/api/send_raspy', sendRaspyRoutes(io, raspySockets, raspyClubs));
 
 // ====================================
 // Conexión de clientes (Raspys u otros)
@@ -32,9 +33,10 @@ io.on('connection', (socket) => {
   console.log('⚡ Nuevo cliente conectado');
 
   // Registrar Raspy
-  socket.on('register_raspy', ({ raspy_id }) => {
+  socket.on('register_raspy', ({ raspy_id, club }) => {
     raspySockets[raspy_id] = socket;
-    console.log(`✅ ID registrada: ${raspy_id}`);
+    raspyClubs[raspy_id] = club;  // [NUEVO] Guardar el club
+    console.log(`✅ ID registrada: ${raspy_id} - Club: ${club}`);
   });
 
   // Registrar clientes de configuración que quieren ver una Raspy específica
