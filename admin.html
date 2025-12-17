@@ -837,11 +837,16 @@
       const logsFiltrados = allLogs.filter(log => {
         const coincideRaspy = log.raspy_id.toLowerCase().includes(filterRaspy);
         
-        // Si filtro es "page_loaded", buscar también "pagina_cargada" y "acceso"
-        let coincideTipo = !filterType;
-        if (filterType === 'page_loaded') {
+        // Lógica de tipo
+        let coincideTipo;
+        if (!filterType) {
+          // Si no hay filtro, mostrar todos
+          coincideTipo = true;
+        } else if (filterType === 'page_loaded') {
+          // Si filtro es "page_loaded", buscar también "pagina_cargada" y "acceso"
           coincideTipo = log.tipo === 'page_loaded' || log.tipo === 'pagina_cargada' || log.tipo === 'acceso';
         } else {
+          // Para otros filtros exactos
           coincideTipo = log.tipo === filterType;
         }
         
