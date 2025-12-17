@@ -247,6 +247,20 @@
     const lockoutMsg = document.getElementById('lockout-msg');
     const countdownSpan = document.getElementById('countdown');
 
+    // Limpiar lockout expirado al cargar (evita bloqueos fantasma)
+    function limpiarLockoutExpirado() {
+      const lockoutEnd = localStorage.getItem('loginLockoutEnd');
+      if (lockoutEnd) {
+        const ahora = Date.now();
+        const finLockout = parseInt(lockoutEnd);
+        
+        // Si ya expiró, limpiar
+        if (ahora >= finLockout) {
+          localStorage.removeItem('loginLockoutEnd');
+        }
+      }
+    }
+
     let lockoutEndTime = localStorage.getItem('loginLockoutEnd');
 
     // Verificar si está en lockout
@@ -260,6 +274,7 @@
         return true;
       } else {
         localStorage.removeItem('loginLockoutEnd');
+        lockoutEndTime = null;
         return false;
       }
     }
@@ -337,6 +352,7 @@
             // Rate limit alcanzado
             const lockoutTime = Date.now() + (5 * 60 * 1000);
             localStorage.setItem('loginLockoutEnd', lockoutTime.toString());
+            lockoutEndTime = lockoutTime.toString();
             
             mostrarError('Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.');
             actualizarCountdown();
@@ -369,8 +385,10 @@
       errorMsg.classList.add('show');
     }
 
-    // Verificar lockout al cargar
+    // Al cargar la página: limpiar lockout expirado y verificar estado actual
     window.addEventListener('load', () => {
+      limpiarLockoutExpirado();
+      lockoutEndTime = localStorage.getItem('loginLockoutEnd');
       actualizarCountdown();
       usernameInput.focus();
     });
