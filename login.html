@@ -189,12 +189,12 @@
           <span id="error-text"></span>
         </div>
 
-        <div id="attempts-warning" style="display: none; background: rgba(255, 193, 7, 0.1); border: 1px solid rgba(255, 193, 7, 0.3); color: #ffc107; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
+        <div id="attempts-warning" style="background: rgba(255, 193, 7, 0.1); border: 1px solid rgba(255, 193, 7, 0.3); color: #ffc107; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; align-items: center; gap: 10px; display: none;">
           <i class="fa-solid fa-triangle-exclamation"></i>
           <span id="attempts-text"></span>
         </div>
 
-        <div id="lockout-msg" style="display: none; background: rgba(255, 68, 68, 0.15); border: 1px solid rgba(255, 68, 68, 0.4); color: #ff6b6b; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+        <div id="lockout-msg" style="background: rgba(255, 68, 68, 0.15); border: 1px solid rgba(255, 68, 68, 0.4); color: #ff6b6b; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none;">
           <i class="fa-solid fa-lock" style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
           <p style="font-weight: 600; margin-bottom: 8px;">Acceso bloqueado</p>
           <p style="font-size: 0.85rem; margin-bottom: 10px;">Demasiados intentos fallidos.</p>
@@ -331,29 +331,20 @@
         } else {
           // Login fallido
           const status = response.status;
-          const intentosRestantes = data.intentosRestantes || 0;
+          const intentosRestantes = data.intentosRestantes !== undefined ? data.intentosRestantes : 0;
 
-          if (status === 429) {
+          if (status === 429 || data.bloqueado) {
             // Rate limit alcanzado
-            const retryAfter = response.headers.get('Retry-After') || 300;
-            const lockoutTime = Date.now() + (parseInt(retryAfter) * 1000);
+            const lockoutTime = Date.now() + (5 * 60 * 1000);
             localStorage.setItem('loginLockoutEnd', lockoutTime.toString());
             
             mostrarError('Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.');
             actualizarCountdown();
-          } else if (intentosRestantes !== undefined && intentosRestantes < 3) {
+          } else if (intentosRestantes !== undefined && intentosRestantes < 3 && intentosRestantes > 0) {
             // Mostrar advertencia de intentos restantes
             mostrarError(data.error || 'Usuario o contraseña incorrectos');
-            
-            if (intentosRestantes > 0) {
-              attemptsText.textContent = `Te quedan ${intentosRestantes} intento${intentosRestantes === 1 ? '' : 's'} antes de bloquear.`;
-              attemptsWarning.style.display = 'flex';
-            } else {
-              // Activar lockout
-              const lockoutTime = Date.now() + (5 * 60 * 1000);
-              localStorage.setItem('loginLockoutEnd', lockoutTime.toString());
-              actualizarCountdown();
-            }
+            attemptsText.textContent = `Te quedan ${intentosRestantes} intento${intentosRestantes === 1 ? '' : 's'} antes de bloquear.`;
+            attemptsWarning.style.display = 'flex';
           } else {
             mostrarError(data.error || 'Usuario o contraseña incorrectos');
           }

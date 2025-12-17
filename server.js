@@ -56,12 +56,19 @@ app.use(session({
 const loginLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutos
   max: 3, // Máximo 3 intentos
-  message: 'Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.',
   standardHeaders: true, // Retorna info en RateLimit-* headers
   legacyHeaders: false, // Deshabilita X-RateLimit-* headers
   skip: (req) => {
     // No limitar si ya está autenticado
     return req.session && req.session.autenticado;
+  },
+  handler: (req, res) => {
+    // Retornar JSON válido en lugar de texto plano
+    res.status(429).json({
+      error: 'Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.',
+      intentosRestantes: 0,
+      bloqueado: true
+    });
   }
 });
 
