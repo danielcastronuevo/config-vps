@@ -124,6 +124,30 @@
     </div>
   </section>
 </main>
+
+<!-- 💬 Botón flotante de feedback -->
+<div id="feedback-bubble" class="feedback-bubble">
+  <i class="fa-solid fa-comment-dots"></i>
+</div>
+
+<!-- 💬 Modal de feedback -->
+<div id="feedback-modal" class="feedback-modal" style="display: none;">
+  <div class="feedback-modal-content">
+    <div class="feedback-modal-header">
+      <h2>Envianos tus comentarios</h2>
+      <button id="feedback-close" class="feedback-close">&times;</button>
+    </div>
+    <div class="feedback-modal-body">
+      <p>¿Encontraste un bug? ¿Tienes una sugerencia? ¡Nos encantaría saberlo!</p>
+      <textarea id="feedback-text" placeholder="Cuéntanos tu opinión, reporte de bug, sugerencia de mejora..." rows="6"></textarea>
+    </div>
+    <div class="feedback-modal-footer">
+      <button id="feedback-cancel" class="feedback-btn-cancel">Cancelar</button>
+      <button id="feedback-send" class="feedback-btn-send">Enviar</button>
+    </div>
+  </div>
+</div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="script.js"></script>
 </body>

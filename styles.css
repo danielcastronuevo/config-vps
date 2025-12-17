@@ -301,3 +301,193 @@ input.error, select.error {
 .cancha-check .led {
   background-color: #ffcc00; /* led amarillo */
 }
+/* ==================== BOTÓN FLOTANTE DE FEEDBACK ==================== */
+
+.feedback-bubble {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--accent) 0%, #7b1fa2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(155, 48, 255, 0.4);
+  z-index: 99;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.feedback-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(155, 48, 255, 0.6);
+}
+
+.feedback-bubble:active {
+  transform: scale(0.95);
+}
+
+/* ==================== MODAL DE FEEDBACK ==================== */
+
+.feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.feedback-modal-content {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.feedback-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.feedback-modal-header h2 {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin: 0;
+}
+
+.feedback-close {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.feedback-close:hover {
+  color: var(--accent);
+}
+
+.feedback-modal-body {
+  padding: 20px;
+}
+
+.feedback-modal-body p {
+  color: var(--text);
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+#feedback-text {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  background: var(--bg-alt2);
+  color: var(--text);
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+#feedback-text:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(155, 48, 255, 0.05);
+}
+
+#feedback-text::placeholder {
+  color: rgba(230, 230, 240, 0.5);
+}
+
+.feedback-modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid var(--card-border);
+  justify-content: flex-end;
+}
+
+.feedback-btn-cancel,
+.feedback-btn-send {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.feedback-btn-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+
+.feedback-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.feedback-btn-send {
+  background: linear-gradient(135deg, var(--accent) 0%, #7b1fa2 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.feedback-btn-send:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 15px rgba(155, 48, 255, 0.3);
+}
+
+.feedback-btn-send:active {
+  transform: scale(0.98);
+}
+
+.feedback-btn-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

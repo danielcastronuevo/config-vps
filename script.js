@@ -624,3 +624,81 @@ sendToServer = (datosPartido) => {
       alert("No se pudo enviar la configuración. ¿El servidor está corriendo?");
   });
 };
+
+// ==================================================
+// BOTÓN FLOTANTE DE FEEDBACK
+// ==================================================
+
+const feedbackBubble = document.getElementById('feedback-bubble');
+const feedbackModal = document.getElementById('feedback-modal');
+const feedbackText = document.getElementById('feedback-text');
+const feedbackClose = document.getElementById('feedback-close');
+const feedbackCancel = document.getElementById('feedback-cancel');
+const feedbackSend = document.getElementById('feedback-send');
+
+// Abrir modal
+feedbackBubble.addEventListener('click', () => {
+  feedbackModal.style.display = 'flex';
+  feedbackText.focus();
+});
+
+// Cerrar modal
+function cerrarFeedbackModal() {
+  feedbackModal.style.display = 'none';
+  feedbackText.value = '';
+}
+
+feedbackClose.addEventListener('click', cerrarFeedbackModal);
+feedbackCancel.addEventListener('click', cerrarFeedbackModal);
+
+// Cerrar al hacer click fuera del modal
+feedbackModal.addEventListener('click', (e) => {
+  if (e.target === feedbackModal) {
+    cerrarFeedbackModal();
+  }
+});
+
+// Enviar feedback
+feedbackSend.addEventListener('click', () => {
+  const mensaje = feedbackText.value.trim();
+
+  if (!mensaje) {
+    alert('Por favor escribe un mensaje antes de enviar');
+    return;
+  }
+
+  feedbackSend.disabled = true;
+  feedbackSend.textContent = 'Enviando...';
+
+  fetch('/api/enviar_feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      raspy_id: RASPY_ID,
+      club: CLUB,
+      mensaje: mensaje
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('✅ Feedback enviado:', data);
+    alert('¡Gracias por tu feedback! 💙');
+    cerrarFeedbackModal();
+    feedbackSend.disabled = false;
+    feedbackSend.textContent = 'Enviar';
+  })
+  .catch(error => {
+    console.error('Error enviando feedback:', error);
+    alert('No se pudo enviar el feedback. Intenta de nuevo.');
+    feedbackSend.disabled = false;
+    feedbackSend.textContent = 'Enviar';
+  });
+});
+
+// Permitir enviar con Ctrl+Enter o Cmd+Enter
+feedbackText.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && !feedbackSend.disabled) {
+    feedbackSend.click();
+  }
+});
+
