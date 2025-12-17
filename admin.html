@@ -48,6 +48,7 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     header h1 {
@@ -63,6 +64,18 @@
 
     .header-content {
       flex: 1;
+      min-width: 200px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+      
+      header h1 {
+        font-size: 1.4rem;
+      }
     }
 
     .logout-btn {
@@ -88,33 +101,35 @@
     }
 
     .filters {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
       margin-bottom: 25px;
-      flex-wrap: wrap;
     }
 
     .filter-group {
       display: flex;
-      gap: 8px;
-      align-items: center;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .filter-group label {
       color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
     .filter-group input,
     .filter-group select {
-      padding: 8px 12px;
+      padding: 10px 12px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text);
       border-radius: 6px;
       font-family: var(--font);
       font-size: 0.9rem;
+      width: 100%;
     }
 
     .filter-group input:focus,
@@ -124,32 +139,68 @@
       background: rgba(155, 48, 255, 0.05);
     }
 
+    @media (max-width: 768px) {
+      .filters {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
       margin-bottom: 25px;
     }
 
     .stat-card {
       background: var(--card-bg);
-      padding: 20px;
+      padding: 15px;
       border-radius: var(--radius);
       border: 1px solid var(--card-border);
       text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 10px rgba(155, 48, 255, 0.1);
     }
 
     .stat-card .number {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
       color: var(--accent);
       margin-bottom: 5px;
     }
 
     .stat-card .label {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: rgba(230, 230, 240, 0.6);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 768px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-card .number {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ==================== PESTAÑAS ==================== */
@@ -158,6 +209,8 @@
       gap: 10px;
       margin-bottom: 25px;
       border-bottom: 1px solid var(--card-border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .tab-btn {
@@ -170,6 +223,7 @@
       font-weight: 500;
       border-bottom: 3px solid transparent;
       transition: all 0.3s ease;
+      white-space: nowrap;
     }
 
     .tab-btn:hover {
@@ -179,6 +233,17 @@
     .tab-btn.active {
       color: var(--accent);
       border-bottom-color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .tabs {
+        gap: 5px;
+      }
+
+      .tab-btn {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+      }
     }
 
     .tab-content {
@@ -258,6 +323,9 @@
     .message-timestamp {
       font-size: 0.85rem;
       color: rgba(230, 230, 240, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .message-meta {
@@ -281,6 +349,35 @@
       text-transform: uppercase;
       font-size: 0.75rem;
       font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .message-card {
+        padding: 15px;
+      }
+
+      .message-header {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .message-id {
+        font-size: 0.8rem;
+      }
+
+      .message-timestamp {
+        font-size: 0.75rem;
+      }
+
+      .message-meta {
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: 10px;
+      }
+
+      .meta-item {
+        font-size: 0.85rem;
+      }
     }
 
     .meta-value {
@@ -542,6 +639,8 @@
     function obtenerBadgeYColor(tipo) {
       const badges = {
         'page_loaded': { clase: 'page_loaded', texto: 'Acceso a Página' },
+        'pagina_cargada': { clase: 'page_loaded', texto: 'Acceso a Página' },
+        'acceso': { clase: 'page_loaded', texto: 'Acceso a Página' },
         'configuracion_enviada': { clase: 'configuracion_enviada', texto: 'Configuración Enviada' },
         'inicio_de_sesion': { clase: 'inicio_de_sesion', texto: 'Inicio de Sesión' },
         'consulta': { clase: 'consulta', texto: 'Consulta' }
@@ -625,7 +724,7 @@
     function actualizarEstadisticasLogs() {
       const totalLogs = allLogs.length;
       const configSent = allLogs.filter(l => l.tipo === 'configuracion_enviada').length;
-      const pageLoads = allLogs.filter(l => l.tipo === 'page_loaded').length;
+      const pageLoads = allLogs.filter(l => l.tipo === 'page_loaded' || l.tipo === 'pagina_cargada' || l.tipo === 'acceso').length;
 
       document.getElementById('totalLogs').textContent = totalLogs;
       document.getElementById('configSent').textContent = configSent;
