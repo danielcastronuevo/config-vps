@@ -7,7 +7,7 @@ const timersLiberacionPulseras = {}; // raspy_id => timeoutId
 // 🔹 Tiempo máximo que pueden estar bloqueadas las pulseras si no se recibe confirmación (5 minutos como red de seguridad)
 const MAX_TIEMPO_PULSERA_BLOQUEADA = 5 * 60 * 1000;
 
-module.exports = function(io, raspySockets, raspyClubs, pulserasEnUsoPorClub, pulserasPorRaspy) {
+module.exports = function(io, raspySockets, raspyClubs, pulserasEnUsoPorClub, pulserasPorRaspy, registrarConfiguracion) {
   const router = express.Router();
 
   // 🔹 Función auxiliar para liberar pulseras
@@ -94,6 +94,9 @@ module.exports = function(io, raspySockets, raspyClubs, pulserasEnUsoPorClub, pu
     }
 
     socketRaspy.emit(`config_${raspy_id}`, datos);
+
+    // 📊 Registrar configuración enviada exitosamente
+    registrarConfiguracion(raspy_id, club, datos);
 
     res.json({ mensaje: 'Datos enviados correctamente', club });
   });

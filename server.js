@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
 const { Server } = require('socket.io');
 
 const app = express();
@@ -11,6 +12,85 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+
+// ====================================
+// Sistema de Reportes
+// ====================================
+const REPORTS_DIR = path.join(__dirname, 'reports');
+
+// Crear carpeta reports si no existe
+if (!fs.existsSync(REPORTS_DIR)) {
+  fs.mkdirSync(REPORTS_DIR, { recursive: true });
+}
+
+// Función para registrar accesos
+function registrarAcceso(raspy_id, tipo = 'acceso') {
+  const ahora = new Date();
+  const timestamp = ahora.toISOString();
+  const fecha = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
+  
+  const reportPath = path.join(REPORTS_DIR, `${fecha}.json`);
+  
+  let registros = [];
+  if (fs.existsSync(reportPath)) {
+    try {
+      registros = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
+    } catch (err) {
+      console.error('Error leyendo reporte:', err);
+    }
+  }
+  
+  registros.push({
+    timestamp,
+    raspy_id,
+    tipo
+  });
+  
+  fs.writeFileSync(reportPath, JSON.stringify(registros, null, 2));
+  console.log(`📊 Acceso registrado: ${raspy_id}`);
+}
+
+// Función para registrar configuraciones
+function registrarConfiguracion(raspy_id, club, datosPartido) {
+  const ahora = new Date();
+  const timestamp = ahora.toISOString();
+  const fecha = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
+  
+  const reportPath = path.join(REPORTS_DIR, `${fecha}.json`);
+  
+  let registros = [];
+  if (fs.existsSync(reportPath)) {
+    try {
+      registros = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
+    } catch (err) {
+      console.error('Error leyendo reporte:', err);
+    }
+  }
+  
+  registros.push({
+    timestamp,
+    raspy_id,
+    club,
+    tipo: 'configuracion_enviada',
+    partido: {
+      jugadores: datosPartido.jugadores,
+      parejas: datosPartido.parejas,
+      pulseras: {
+        pareja1: datosPartido.pulseras?.pareja1?.nombre,
+        pareja2: datosPartido.pulseras?.pareja2?.nombre
+      },
+      duracion: datosPartido.duracion,
+      comienzo: datosPartido.comienzo,
+      fin: datosPartido.fin,
+      tiempoCalentamiento: datosPartido.tiempoCalentamiento,
+      cambioDeLado: datosPartido.cambioDeLado,
+      tipoGames: datosPartido.tipoGames
+    }
+  });
+  
+  fs.writeFileSync(reportPath, JSON.stringify(registros, null, 2));
+  console.log(`📊 Configuración registrada para ${raspy_id}`);
+}
 
 // ====================================
 // Registro de Raspys conectadas y clientes
@@ -26,8 +106,22 @@ const pulserasPorRaspy = {};   // raspy_id => Set de pulseras que configuró
 // Rutas para enviar datos a Raspy
 // ====================================
 const sendRaspyRoutes = require('./routes/send_raspy');
-const sendRaspyRouter = sendRaspyRoutes(io, raspySockets, raspyClubs, pulserasEnUsoPorClub, pulserasPorRaspy);
+const sendRaspyRouter = sendRaspyRoutes(io, raspySockets, raspyClubs, pulserasEnUsoPorClub, pulserasPorRaspy, registrarConfiguracion);
 app.use('/api/send_raspy', sendRaspyRouter);
+
+// ====================================
+// Endpoint para registrar accesos
+// ====================================
+app.post('/api/registrar_acceso', (req, res) => {
+  const { raspy_id, tipo } = req.body;
+  
+  if (!raspy_id) {
+    return res.status(400).json({ error: 'Falta raspy_id' });
+  }
+  
+  registrarAcceso(raspy_id, tipo || 'acceso');
+  res.json({ mensaje: 'Acceso registrado' });
+});
 
 // ====================================
 // Conexión de clientes (Raspys u otros)
@@ -40,6 +134,9 @@ io.on('connection', (socket) => {
     raspySockets[raspy_id] = socket;
     raspyClubs[raspy_id] = club;  // [NUEVO] Guardar el club
     console.log(`✅ ID registrada: ${raspy_id} - Club: ${club}`);
+    
+    // 📊 Registrar acceso
+    registrarAcceso(raspy_id, 'registro');
   });
 
   // Registrar clientes de configuración que quieren ver una Raspy específica
@@ -47,6 +144,9 @@ io.on('connection', (socket) => {
     clientesConfig[socket.id] = raspy_id;
     const club = raspyClubs[raspy_id];
     console.log(`📡 Cliente ${socket.id} consulta ID: ${raspy_id}`);
+    
+    // 📊 Registrar acceso
+    registrarAcceso(raspy_id, 'consulta');
 
     // Enviar inmediatamente el estado actual si existe
     if (estadoCanchaActual[raspy_id]) {
