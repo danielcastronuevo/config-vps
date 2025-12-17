@@ -16,6 +16,26 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 // ====================================
+// Ruta para Favicon
+// ====================================
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'favicon.ico'), { 
+    headers: { 'Cache-Control': 'public, max-age=86400' } 
+  });
+});
+
+// ====================================
+// Headers de seguridad
+// ====================================
+app.use((req, res, next) => {
+  // Evitar conflictos con Cloudflare Web Analytics
+  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  next();
+});
+
+// ====================================
 // Configuración de Sesiones
 // ====================================
 app.use(session({
