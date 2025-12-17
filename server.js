@@ -52,6 +52,12 @@ app.use(session({
 // ====================================
 // Rate Limiting para Login
 // ====================================
+// Sistema global de bloqueo (compartido entre todos los dispositivos)
+const loginLockout = {
+  bloqueadoHasta: null,  // timestamp hasta cuándo está bloqueado
+  intentosFallidos: 0    // contador de intentos fallidos
+};
+
 // Limitar a 3 intentos por IP en 5 minutos
 const loginLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutos
@@ -63,11 +69,17 @@ const loginLimiter = rateLimit({
     return req.session && req.session.autenticado;
   },
   handler: (req, res) => {
+    // Activar bloqueo global cuando se alcanza el límite
+    const lockoutTime = Date.now() + (5 * 60 * 1000); // 5 minutos
+    loginLockout.bloqueadoHasta = lockoutTime;
+    loginLockout.intentosFallidos = 3;
+    
     // Retornar JSON válido en lugar de texto plano
     res.status(429).json({
       error: 'Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.',
       intentosRestantes: 0,
-      bloqueado: true
+      bloqueado: true,
+      bloqueadoHasta: lockoutTime
     });
   }
 });
@@ -257,6 +269,22 @@ app.use('/api/send_raspy', sendRaspyRouter);
 // Endpoint para Login
 // ====================================
 app.post('/api/login', loginLimiter, (req, res) => {
+  // Verificar si hay bloqueo global activo
+  const ahora = Date.now();
+  if (loginLockout.bloqueadoHasta && ahora < loginLockout.bloqueadoHasta) {
+    return res.status(429).json({
+      error: 'Acceso bloqueado. Intenta de nuevo en 5 minutos.',
+      bloqueado: true,
+      bloqueadoHasta: loginLockout.bloqueadoHasta
+    });
+  }
+
+  // Limpiar bloqueo si ya expiró
+  if (loginLockout.bloqueadoHasta && ahora >= loginLockout.bloqueadoHasta) {
+    loginLockout.bloqueadoHasta = null;
+    loginLockout.intentosFallidos = 0;
+  }
+
   // Sanitizar inputs
   const username = sanitizarInput(req.body.username || '');
   const password = sanitizarInput(req.body.password || '');
@@ -271,14 +299,50 @@ app.post('/api/login', loginLimiter, (req, res) => {
   if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
     req.session.autenticado = true;
     req.session.loginTime = new Date();
-    res.clearCookie('Retry-After'); // Limpiar rate limit cookie
+    loginLockout.bloqueadoHasta = null;
+    loginLockout.intentosFallidos = 0;
+    res.clearCookie('Retry-After');
     return res.json({ mensaje: 'Login exitoso' });
   }
 
-  // Login fallido
+  // Login fallido - incrementar intentos
+  loginLockout.intentosFallidos = (loginLockout.intentosFallidos || 0) + 1;
+  const intentosRestantes = Math.max(0, 3 - loginLockout.intentosFallidos);
+
   res.status(401).json({ 
     error: 'Usuario o contraseña incorrectos',
-    intentosRestantes: req.rateLimit.remaining
+    intentosRestantes: intentosRestantes
+  });
+});
+
+// ====================================
+// Endpoint para verificar estado de bloqueo
+// ====================================
+app.get('/api/check_lockout', (req, res) => {
+  const ahora = Date.now();
+  
+  // Limpiar bloqueo si expiró
+  if (loginLockout.bloqueadoHasta && ahora >= loginLockout.bloqueadoHasta) {
+    loginLockout.bloqueadoHasta = null;
+    loginLockout.intentosFallidos = 0;
+  }
+  
+  // Verificar si está bloqueado actualmente
+  const estaBloqueado = loginLockout.bloqueadoHasta && ahora < loginLockout.bloqueadoHasta;
+  
+  if (estaBloqueado) {
+    const tiempoRestante = Math.ceil((loginLockout.bloqueadoHasta - ahora) / 1000);
+    return res.json({
+      bloqueado: true,
+      bloqueadoHasta: loginLockout.bloqueadoHasta,
+      tiempoRestante: tiempoRestante
+    });
+  }
+  
+  res.json({
+    bloqueado: false,
+    bloqueadoHasta: null,
+    tiempoRestante: 0
   });
 });
 

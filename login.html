@@ -247,45 +247,46 @@
     const lockoutMsg = document.getElementById('lockout-msg');
     const countdownSpan = document.getElementById('countdown');
 
-    // Limpiar lockout expirado al cargar (evita bloqueos fantasma)
-    function limpiarLockoutExpirado() {
-      const lockoutEnd = localStorage.getItem('loginLockoutEnd');
-      if (lockoutEnd) {
-        const ahora = Date.now();
-        const finLockout = parseInt(lockoutEnd);
+    let lockoutEndTime = null;
+
+    // Verificar si está en lockout (consultando al servidor)
+    async function verificarLockoutServidor() {
+      try {
+        const response = await fetch('/api/check_lockout');
+        const data = await response.json();
         
-        // Si ya expiró, limpiar
-        if (ahora >= finLockout) {
-          localStorage.removeItem('loginLockoutEnd');
+        if (data.bloqueado) {
+          lockoutEndTime = data.bloqueadoHasta;
+          actualizarCountdown();
+          return true;
+        } else {
+          lockoutEndTime = null;
+          desbloquearFormulario();
+          return false;
         }
-      }
-    }
-
-    let lockoutEndTime = localStorage.getItem('loginLockoutEnd');
-
-    // Verificar si está en lockout
-    function verificarLockout() {
-      if (!lockoutEndTime) return false;
-
-      const ahora = Date.now();
-      const finLockout = parseInt(lockoutEndTime);
-
-      if (ahora < finLockout) {
-        return true;
-      } else {
-        localStorage.removeItem('loginLockoutEnd');
-        lockoutEndTime = null;
+      } catch (error) {
+        console.error('Error verificando bloqueo:', error);
+        desbloquearFormulario();
         return false;
       }
     }
 
+    function desbloquearFormulario() {
+      lockoutMsg.style.display = 'none';
+      form.style.pointerEvents = 'auto';
+      form.style.opacity = '1';
+      loginBtn.disabled = false;
+    }
+
     // Actualizar contador de lockout
     function actualizarCountdown() {
-      if (!verificarLockout()) {
-        lockoutMsg.style.display = 'none';
-        form.style.pointerEvents = 'auto';
-        form.style.opacity = '1';
-        loginBtn.disabled = false;
+      if (!lockoutEndTime) return;
+
+      const ahora = Date.now();
+      const finLockout = parseInt(lockoutEndTime);
+
+      if (ahora >= finLockout) {
+        desbloquearFormulario();
         return;
       }
 
@@ -294,8 +295,6 @@
       loginBtn.disabled = true;
       lockoutMsg.style.display = 'block';
 
-      const ahora = Date.now();
-      const finLockout = parseInt(lockoutEndTime);
       const tiempoRestante = Math.ceil((finLockout - ahora) / 1000);
 
       if (tiempoRestante > 0) {
@@ -310,7 +309,7 @@
       e.preventDefault();
 
       // Verificar si está en lockout antes de intentar
-      if (verificarLockout()) {
+      if (lockoutEndTime) {
         actualizarCountdown();
         return;
       }
@@ -340,26 +339,21 @@
         const data = await response.json();
 
         if (response.ok) {
-          // Login exitoso, limpiar localStorage y redirigir
-          localStorage.removeItem('loginLockoutEnd');
+          // Login exitoso, redirigir
           window.location.href = '/msg/';
         } else {
           // Login fallido
           const status = response.status;
-          const intentosRestantes = data.intentosRestantes !== undefined ? data.intentosRestantes : 0;
 
           if (status === 429 || data.bloqueado) {
             // Rate limit alcanzado
-            const lockoutTime = Date.now() + (5 * 60 * 1000);
-            localStorage.setItem('loginLockoutEnd', lockoutTime.toString());
-            lockoutEndTime = lockoutTime.toString();
-            
+            lockoutEndTime = data.bloqueadoHasta;
             mostrarError('Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.');
             actualizarCountdown();
-          } else if (intentosRestantes !== undefined && intentosRestantes < 3 && intentosRestantes > 0) {
+          } else if (data.intentosRestantes !== undefined && data.intentosRestantes > 0) {
             // Mostrar advertencia de intentos restantes
             mostrarError(data.error || 'Usuario o contraseña incorrectos');
-            attemptsText.textContent = `Te quedan ${intentosRestantes} intento${intentosRestantes === 1 ? '' : 's'} antes de bloquear.`;
+            attemptsText.textContent = `Te quedan ${data.intentosRestantes} intento${data.intentosRestantes === 1 ? '' : 's'} antes de bloquear.`;
             attemptsWarning.style.display = 'flex';
           } else {
             mostrarError(data.error || 'Usuario o contraseña incorrectos');
@@ -385,20 +379,21 @@
       errorMsg.classList.add('show');
     }
 
-    // Al cargar la página: limpiar lockout expirado y verificar estado actual
-    window.addEventListener('load', () => {
-      limpiarLockoutExpirado();
-      lockoutEndTime = localStorage.getItem('loginLockoutEnd');
-      actualizarCountdown();
+    // Al cargar la página: verificar bloqueo en el servidor
+    window.addEventListener('load', async () => {
+      await verificarLockoutServidor();
       usernameInput.focus();
     });
 
-    // Verificar lockout cada segundo
-    setInterval(() => {
-      if (verificarLockout()) {
-        actualizarCountdown();
+    // Verificar estado cada 2 segundos si está bloqueado
+    setInterval(async () => {
+      if (lockoutEndTime) {
+        const sigue_bloqueado = await verificarLockoutServidor();
+        if (!sigue_bloqueado) {
+          usernameInput.focus();
+        }
       }
-    }, 1000);
+    }, 2000);
   </script>
 </body>
 </html>
