@@ -663,7 +663,7 @@
 
       container.innerHTML = logs.map(log => {
         const badge = obtenerBadgeYColor(log.tipo);
-        const timestamp = new Date(log.timestamp).toLocaleString('es-AR');
+        const timestamp = formatearFecha(log.timestamp);
         
         let contenidoExtra = '';
         if (log.tipo === 'configuracion_enviada' && log.partido) {
@@ -770,7 +770,7 @@
             <div class="message-id">${msg.raspy_id}</div>
             <div class="message-timestamp">
               <i class="fa-solid fa-clock"></i>
-              ${new Date(msg.timestamp).toLocaleString('es-AR')}
+              ${formatearFecha(msg.timestamp)}
             </div>
           </div>
           <div class="message-meta">
@@ -788,6 +788,19 @@
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
+    }
+
+    // Función para formatear fecha/hora en 24 horas
+    function formatearFecha(timestamp) {
+      const fecha = new Date(timestamp);
+      const año = fecha.getFullYear();
+      const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+      const día = String(fecha.getDate()).padStart(2, '0');
+      const horas = String(fecha.getHours()).padStart(2, '0');
+      const minutos = String(fecha.getMinutes()).padStart(2, '0');
+      const segundos = String(fecha.getSeconds()).padStart(2, '0');
+      
+      return `${día}/${mes}/${año} ${horas}:${minutos}:${segundos}`;
     }
 
     // Filtros de mensajes
@@ -823,7 +836,15 @@
 
       const logsFiltrados = allLogs.filter(log => {
         const coincideRaspy = log.raspy_id.toLowerCase().includes(filterRaspy);
-        const coincideTipo = !filterType || log.tipo === filterType;
+        
+        // Si filtro es "page_loaded", buscar también "pagina_cargada" y "acceso"
+        let coincideTipo = !filterType;
+        if (filterType === 'page_loaded') {
+          coincideTipo = log.tipo === 'page_loaded' || log.tipo === 'pagina_cargada' || log.tipo === 'acceso';
+        } else {
+          coincideTipo = log.tipo === filterType;
+        }
+        
         const coincideFecha = !filterDate || log.timestamp.startsWith(filterDate);
 
         return coincideRaspy && coincideTipo && coincideFecha;
