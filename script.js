@@ -632,7 +632,7 @@ sendToServer = (datosPartido) => {
 const feedbackBubble = document.getElementById('feedback-bubble');
 const feedbackModal = document.getElementById('feedback-modal');
 const feedbackText = document.getElementById('feedback-text');
-const feedbackClose = document.getElementById('feedback-close');
+
 const feedbackCancel = document.getElementById('feedback-cancel');
 const feedbackSend = document.getElementById('feedback-send');
 
@@ -648,7 +648,7 @@ function cerrarFeedbackModal() {
   feedbackText.value = '';
 }
 
-feedbackClose.addEventListener('click', cerrarFeedbackModal);
+
 feedbackCancel.addEventListener('click', cerrarFeedbackModal);
 
 // Cerrar al hacer click fuera del modal
