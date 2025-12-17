@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { Server } = require('socket.io');
 const session = require('express-session');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const server = http.createServer(app);
@@ -27,6 +28,54 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000 // 24 horas
   }
 }));
+
+// ====================================
+// Rate Limiting para Login
+// ====================================
+// Limitar a 3 intentos por IP en 5 minutos
+const loginLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutos
+  max: 3, // Máximo 3 intentos
+  message: 'Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.',
+  standardHeaders: true, // Retorna info en RateLimit-* headers
+  legacyHeaders: false, // Deshabilita X-RateLimit-* headers
+  skip: (req) => {
+    // No limitar si ya está autenticado
+    return req.session && req.session.autenticado;
+  }
+});
+
+// ====================================
+// Sanitización de Inputs
+// ====================================
+function sanitizarInput(input) {
+  if (typeof input !== 'string') return '';
+  
+  // Remover caracteres peligrosos
+  return input
+    .trim()
+    .substring(0, 100) // Limitar longitud
+    .replace(/[<>\"'%;()&+]/g, ''); // Remover caracteres especiales
+}
+
+// ====================================
+// Validación de credenciales
+// ====================================
+function validarCredenciales(username, password) {
+  if (!username || !password) {
+    return { valido: false, error: 'Usuario y contraseña requeridos' };
+  }
+  
+  if (username.length < 3) {
+    return { valido: false, error: 'Usuario inválido' };
+  }
+  
+  if (password.length < 6) {
+    return { valido: false, error: 'Contraseña inválida' };
+  }
+  
+  return { valido: true };
+}
 
 // ====================================
 // Credenciales de Admin (Cambiar en producción)
@@ -180,19 +229,30 @@ app.use('/api/send_raspy', sendRaspyRouter);
 // ====================================
 // Endpoint para Login
 // ====================================
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
+app.post('/api/login', loginLimiter, (req, res) => {
+  // Sanitizar inputs
+  const username = sanitizarInput(req.body.username || '');
+  const password = sanitizarInput(req.body.password || '');
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Usuario y contraseña requeridos' });
+  // Validar formato de credenciales
+  const validacion = validarCredenciales(username, password);
+  if (!validacion.valido) {
+    return res.status(400).json({ error: validacion.error });
   }
 
+  // Verificar credenciales
   if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
     req.session.autenticado = true;
+    req.session.loginTime = new Date();
+    res.clearCookie('Retry-After'); // Limpiar rate limit cookie
     return res.json({ mensaje: 'Login exitoso' });
   }
 
-  res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
+  // Login fallido
+  res.status(401).json({ 
+    error: 'Usuario o contraseña incorrectos',
+    intentosRestantes: req.rateLimit.remaining
+  });
 });
 
 // ====================================

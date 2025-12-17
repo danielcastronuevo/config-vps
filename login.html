@@ -189,6 +189,18 @@
           <span id="error-text"></span>
         </div>
 
+        <div id="attempts-warning" style="display: none; background: rgba(255, 193, 7, 0.1); border: 1px solid rgba(255, 193, 7, 0.3); color: #ffc107; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span id="attempts-text"></span>
+        </div>
+
+        <div id="lockout-msg" style="display: none; background: rgba(255, 68, 68, 0.15); border: 1px solid rgba(255, 68, 68, 0.4); color: #ff6b6b; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+          <i class="fa-solid fa-lock" style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
+          <p style="font-weight: 600; margin-bottom: 8px;">Acceso bloqueado</p>
+          <p style="font-size: 0.85rem; margin-bottom: 10px;">Demasiados intentos fallidos.</p>
+          <p style="font-size: 0.85rem;">Intenta de nuevo en <span id="countdown">5:00</span> minutos</p>
+        </div>
+
         <div class="form-group">
           <label for="username">Usuario</label>
           <input 
@@ -230,9 +242,63 @@
     const btnLoading = document.getElementById('btn-loading');
     const errorMsg = document.getElementById('error-msg');
     const errorText = document.getElementById('error-text');
+    const attemptsWarning = document.getElementById('attempts-warning');
+    const attemptsText = document.getElementById('attempts-text');
+    const lockoutMsg = document.getElementById('lockout-msg');
+    const countdownSpan = document.getElementById('countdown');
+
+    let lockoutEndTime = localStorage.getItem('loginLockoutEnd');
+
+    // Verificar si está en lockout
+    function verificarLockout() {
+      if (!lockoutEndTime) return false;
+
+      const ahora = Date.now();
+      const finLockout = parseInt(lockoutEndTime);
+
+      if (ahora < finLockout) {
+        return true;
+      } else {
+        localStorage.removeItem('loginLockoutEnd');
+        return false;
+      }
+    }
+
+    // Actualizar contador de lockout
+    function actualizarCountdown() {
+      if (!verificarLockout()) {
+        lockoutMsg.style.display = 'none';
+        form.style.pointerEvents = 'auto';
+        form.style.opacity = '1';
+        loginBtn.disabled = false;
+        return;
+      }
+
+      form.style.pointerEvents = 'none';
+      form.style.opacity = '0.5';
+      loginBtn.disabled = true;
+      lockoutMsg.style.display = 'block';
+
+      const ahora = Date.now();
+      const finLockout = parseInt(lockoutEndTime);
+      const tiempoRestante = Math.ceil((finLockout - ahora) / 1000);
+
+      if (tiempoRestante > 0) {
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+        countdownSpan.textContent = `${minutos}:${String(segundos).padStart(2, '0')}`;
+        setTimeout(actualizarCountdown, 1000);
+      }
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Verificar si está en lockout antes de intentar
+      if (verificarLockout()) {
+        actualizarCountdown();
+        return;
+      }
 
       const username = usernameInput.value.trim();
       const password = passwordInput.value;
@@ -247,6 +313,7 @@
       btnText.style.display = 'none';
       btnLoading.classList.add('show');
       errorMsg.classList.remove('show');
+      attemptsWarning.style.display = 'none';
 
       try {
         const response = await fetch('/api/login', {
@@ -258,10 +325,39 @@
         const data = await response.json();
 
         if (response.ok) {
-          // Login exitoso, redirigir
+          // Login exitoso, limpiar localStorage y redirigir
+          localStorage.removeItem('loginLockoutEnd');
           window.location.href = '/msg/';
         } else {
-          mostrarError(data.error || 'Usuario o contraseña incorrectos');
+          // Login fallido
+          const status = response.status;
+          const intentosRestantes = data.intentosRestantes || 0;
+
+          if (status === 429) {
+            // Rate limit alcanzado
+            const retryAfter = response.headers.get('Retry-After') || 300;
+            const lockoutTime = Date.now() + (parseInt(retryAfter) * 1000);
+            localStorage.setItem('loginLockoutEnd', lockoutTime.toString());
+            
+            mostrarError('Demasiados intentos fallidos. Intenta de nuevo en 5 minutos.');
+            actualizarCountdown();
+          } else if (intentosRestantes !== undefined && intentosRestantes < 3) {
+            // Mostrar advertencia de intentos restantes
+            mostrarError(data.error || 'Usuario o contraseña incorrectos');
+            
+            if (intentosRestantes > 0) {
+              attemptsText.textContent = `Te quedan ${intentosRestantes} intento${intentosRestantes === 1 ? '' : 's'} antes de bloquear.`;
+              attemptsWarning.style.display = 'flex';
+            } else {
+              // Activar lockout
+              const lockoutTime = Date.now() + (5 * 60 * 1000);
+              localStorage.setItem('loginLockoutEnd', lockoutTime.toString());
+              actualizarCountdown();
+            }
+          } else {
+            mostrarError(data.error || 'Usuario o contraseña incorrectos');
+          }
+
           loginBtn.disabled = false;
           btnText.style.display = 'inline';
           btnLoading.classList.remove('show');
@@ -282,10 +378,18 @@
       errorMsg.classList.add('show');
     }
 
-    // Focus en usuario al cargar
+    // Verificar lockout al cargar
     window.addEventListener('load', () => {
+      actualizarCountdown();
       usernameInput.focus();
     });
+
+    // Verificar lockout cada segundo
+    setInterval(() => {
+      if (verificarLockout()) {
+        actualizarCountdown();
+      }
+    }, 1000);
   </script>
 </body>
 </html>
