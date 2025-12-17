@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const { Server } = require('socket.io');
+const session = require('express-session');
 
 const app = express();
 const server = http.createServer(app);
@@ -12,6 +13,36 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+
+// ====================================
+// Configuración de Sesiones
+// ====================================
+app.use(session({
+  secret: 'your-secret-key-change-this-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: false, // Cambiar a true en producción con HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 horas
+  }
+}));
+
+// ====================================
+// Credenciales de Admin (Cambiar en producción)
+// ====================================
+const ADMIN_CREDENTIALS = {
+  username: 'admin',
+  password: 'admin123'
+};
+
+// Middleware para verificar autenticación
+function verificarAutenticacion(req, res, next) {
+  if (req.session && req.session.autenticado) {
+    return next();
+  }
+  res.redirect('/login.html');
+}
 
 // ====================================
 // Sistema de Reportes
@@ -147,6 +178,38 @@ app.use('/api/send_raspy', sendRaspyRouter);
 // ====================================
 // Endpoint para registrar accesos
 // ====================================
+// Endpoint para Login
+// ====================================
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Usuario y contraseña requeridos' });
+  }
+
+  if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    req.session.autenticado = true;
+    return res.json({ mensaje: 'Login exitoso' });
+  }
+
+  res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
+});
+
+// ====================================
+// Endpoint para Logout
+// ====================================
+app.post('/api/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al cerrar sesión' });
+    }
+    res.json({ mensaje: 'Sesión cerrada' });
+  });
+});
+
+// ====================================
+// Endpoint para registrar accesos
+// ====================================
 app.post('/api/registrar_acceso', (req, res) => {
   const { raspy_id, tipo } = req.body;
   
@@ -170,6 +233,51 @@ app.post('/api/enviar_feedback', (req, res) => {
   
   registrarFeedback(raspy_id, club || 'desconocido', mensaje);
   res.json({ mensaje: 'Feedback registrado exitosamente' });
+});
+
+// ====================================
+// Endpoint para obtener mensajes (API) - PROTEGIDO
+// ====================================
+app.get('/api/get_messages', verificarAutenticacion, (req, res) => {
+  try {
+    const MENSAJES_DIR = path.join(__dirname, 'mensajes');
+    
+    if (!fs.existsSync(MENSAJES_DIR)) {
+      return res.json({ messages: [] });
+    }
+
+    let todosLosMensajes = [];
+    const archivos = fs.readdirSync(MENSAJES_DIR);
+
+    // Leer todos los archivos de mensajes
+    for (const archivo of archivos) {
+      if (archivo.endsWith('.json')) {
+        const filePath = path.join(MENSAJES_DIR, archivo);
+        try {
+          const contenido = fs.readFileSync(filePath, 'utf-8');
+          const mensajes = JSON.parse(contenido);
+          todosLosMensajes = todosLosMensajes.concat(mensajes);
+        } catch (err) {
+          console.error(`Error leyendo archivo ${archivo}:`, err);
+        }
+      }
+    }
+
+    // Ordenar por timestamp descendente (más nuevos primero)
+    todosLosMensajes.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    res.json({ messages: todosLosMensajes });
+  } catch (error) {
+    console.error('Error obteniendo mensajes:', error);
+    res.status(500).json({ error: 'Error al obtener mensajes' });
+  }
+});
+
+// ====================================
+// Ruta para panel de administración - PROTEGIDO
+// ====================================
+app.get('/msg/', verificarAutenticacion, (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 // ====================================

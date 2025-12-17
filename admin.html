@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Mensajes - Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #0f0f1a;
+      --bg-alt: #1a1a2e;
+      --bg-alt2: rgba(255,255,255,0.02);
+      --text: #e6e6f0;
+      --accent: #9b30ff;
+      --accent-alt: #f5c518;
+      --card-bg: #22223b;
+      --card-border: rgba(255,255,255,0.08);
+      --radius: 12px;
+      --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-color);
+      font-family: var(--font);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--bg-alt);
+      padding: 25px;
+      border-radius: var(--radius);
+      margin-bottom: 30px;
+      border: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    header h1 {
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: rgba(230, 230, 240, 0.7);
+      font-size: 0.95rem;
+    }
+
+    .header-content {
+      flex: 1;
+    }
+
+    .logout-btn {
+      padding: 10px 18px;
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
+      color: #ff6b6b;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 68, 68, 0.2);
+      border-color: rgba(255, 68, 68, 0.5);
+    }
+
+    .logout-btn:active {
+      transform: scale(0.98);
+    }
+
+    .filters {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .filter-group label {
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .filter-group input,
+    .filter-group select {
+      padding: 8px 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+    }
+
+    .filter-group input:focus,
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(155, 48, 255, 0.05);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      text-align: center;
+    }
+
+    .stat-card .number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: rgba(230, 230, 240, 0.6);
+      text-transform: uppercase;
+    }
+
+    .messages-container {
+      display: grid;
+      gap: 15px;
+    }
+
+    .message-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .message-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 15px rgba(155, 48, 255, 0.1);
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .message-id {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(155, 48, 255, 0.1);
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    .message-timestamp {
+      font-size: 0.85rem;
+      color: rgba(230, 230, 240, 0.6);
+    }
+
+    .message-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    .meta-label {
+      color: rgba(230, 230, 240, 0.6);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .message-text {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      line-height: 1.6;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(230, 230, 240, 0.5);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      opacity: 0.3;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--accent);
+    }
+
+    .loading i {
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .error {
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
+      color: #ff6b6b;
+      padding: 20px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .error i {
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <h1><i class="fa-solid fa-message"></i> Panel de Mensajes</h1>
+        <p>Feedback, sugerencias y reportes de usuarios</p>
+      </div>
+      <button id="logout-btn" class="logout-btn">
+        <i class="fa-solid fa-sign-out-alt"></i> Salir
+      </button>
+    </header>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label for="filterRaspy">Filtrar por Raspy ID:</label>
+        <input type="text" id="filterRaspy" placeholder="ej: AABB11">
+      </div>
+      <div class="filter-group">
+        <label for="filterClub">Filtrar por Club:</label>
+        <input type="text" id="filterClub" placeholder="ej: altoque">
+      </div>
+      <div class="filter-group">
+        <label for="filterDate">Filtrar por Fecha:</label>
+        <input type="date" id="filterDate">
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="number" id="totalMessages">0</div>
+        <div class="label">Total de Mensajes</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" id="uniqueRaspys">0</div>
+        <div class="label">Raspys Únicas</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" id="uniqueClubs">0</div>
+        <div class="label">Clubs Únicos</div>
+      </div>
+    </div>
+
+    <div id="error-container"></div>
+    <div id="messages-container" class="messages-container">
+      <div class="loading">
+        <i class="fa-solid fa-spinner"></i>
+        <p>Cargando mensajes...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allMessages = [];
+
+    async function cargarMensajes() {
+      try {
+        const response = await fetch('/api/get_messages');
+        const data = await response.json();
+
+        if (data.error) {
+          mostrarError(data.error);
+          return;
+        }
+
+        allMessages = data.messages || [];
+        actualizarEstadisticas();
+        mostrarMensajes(allMessages);
+      } catch (error) {
+        console.error('Error cargando mensajes:', error);
+        mostrarError('No se pudo cargar los mensajes');
+      }
+    }
+
+    function mostrarError(mensaje) {
+      const errorContainer = document.getElementById('error-container');
+      errorContainer.innerHTML = `
+        <div class="error">
+          <i class="fa-solid fa-exclamation-circle"></i>
+          <span>${mensaje}</span>
+        </div>
+      `;
+    }
+
+    function actualizarEstadisticas() {
+      const totalMensajes = allMessages.length;
+      const raspysUnicas = new Set(allMessages.map(m => m.raspy_id)).size;
+      const clubsUnicos = new Set(allMessages.map(m => m.club)).size;
+
+      document.getElementById('totalMessages').textContent = totalMensajes;
+      document.getElementById('uniqueRaspys').textContent = raspysUnicas;
+      document.getElementById('uniqueClubs').textContent = clubsUnicos;
+    }
+
+    function mostrarMensajes(mensajes) {
+      const container = document.getElementById('messages-container');
+
+      if (mensajes.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            <p>No hay mensajes que mostrar</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = mensajes.map(msg => `
+        <div class="message-card">
+          <div class="message-header">
+            <div class="message-id">${msg.raspy_id}</div>
+            <div class="message-timestamp">
+              <i class="fa-solid fa-clock"></i>
+              ${new Date(msg.timestamp).toLocaleString('es-AR')}
+            </div>
+          </div>
+          <div class="message-meta">
+            <div class="meta-item">
+              <span class="meta-label">Club</span>
+              <span class="meta-value">${msg.club || 'Desconocido'}</span>
+            </div>
+          </div>
+          <div class="message-text">${escapeHtml(msg.mensaje)}</div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Filtros
+    document.getElementById('filterRaspy').addEventListener('input', aplicarFiltros);
+    document.getElementById('filterClub').addEventListener('input', aplicarFiltros);
+    document.getElementById('filterDate').addEventListener('change', aplicarFiltros);
+
+    function aplicarFiltros() {
+      const filterRaspy = document.getElementById('filterRaspy').value.toLowerCase();
+      const filterClub = document.getElementById('filterClub').value.toLowerCase();
+      const filterDate = document.getElementById('filterDate').value;
+
+      const mensajesFiltrados = allMessages.filter(msg => {
+        const coincideRaspy = msg.raspy_id.toLowerCase().includes(filterRaspy);
+        const coincideClub = (msg.club || '').toLowerCase().includes(filterClub);
+        const coincideFecha = !filterDate || msg.timestamp.startsWith(filterDate);
+
+        return coincideRaspy && coincideClub && coincideFecha;
+      });
+
+      mostrarMensajes(mensajesFiltrados);
+    }
+
+    // Cargar al iniciar
+    cargarMensajes();
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      try {
+        const response = await fetch('/api/logout', { method: 'POST' });
+        if (response.ok) {
+          window.location.href = '/login.html';
+        }
+      } catch (error) {
+        console.error('Error cerrando sesión:', error);
+        alert('Error al cerrar sesión');
+      }
+    });
+  </script>
+</body>
+</html>
