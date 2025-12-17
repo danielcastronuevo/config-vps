@@ -636,10 +636,18 @@ const feedbackText = document.getElementById('feedback-text');
 const feedbackCancel = document.getElementById('feedback-cancel');
 const feedbackSend = document.getElementById('feedback-send');
 
+let feedbackAbiertoenSesion = false; // Rastrear si fue abierto en esta sesión
+
 // Abrir modal
 feedbackBubble.addEventListener('click', () => {
   feedbackModal.style.display = 'flex';
   feedbackText.focus();
+  
+  // Si es la primera vez que se abre, esconder el "!"
+  if (!feedbackAbiertoenSesion) {
+    feedbackBubble.classList.add('feedback-opened');
+    feedbackAbiertoenSesion = true;
+  }
 });
 
 // Cerrar modal

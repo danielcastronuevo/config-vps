@@ -349,6 +349,10 @@ input.error, select.error {
   transform: scale(0.95);
 }
 
+.feedback-bubble.feedback-opened::before {
+  display: none;
+}
+
 /* ==================== MODAL DE FEEDBACK ==================== */
 
 .feedback-modal {
