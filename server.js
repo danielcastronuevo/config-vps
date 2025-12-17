@@ -33,7 +33,7 @@ app.use(session({
 // ====================================
 const ADMIN_CREDENTIALS = {
   username: 'admin',
-  password: 'admin123'
+  password: 'aK7mP9xB2rL5dT3nQ8vW6jH4sC1eY0'
 };
 
 // Middleware para verificar autenticación
