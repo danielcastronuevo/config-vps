@@ -3,15 +3,15 @@
 
 const urlParams = new URLSearchParams(window.location.search);
 const RASPY_ID = urlParams.get("id");
-const CLUB = urlParams.get("club");
+const CLUB = urlParams.get("club") || "la-esquina"; // Placeholder por defecto
 
 if (!RASPY_ID) {
-  alert("Error: no se recibió el ID de la Raspy.");
+  console.warn("⚠️ No se recibió el ID de la Raspy desde los parámetros de URL");
 }
 
-if (!CLUB) {
-  alert("Error: no se recibió el club.");
-}
+// if (!urlParams.get("club")) {
+//   console.warn("⚠️ No se recibió el club, usando placeholder: 'la-esquina'");
+// }
 
 const socket = io();
 
