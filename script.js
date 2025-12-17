@@ -682,7 +682,7 @@ feedbackSend.addEventListener('click', () => {
   .then(response => response.json())
   .then(data => {
     console.log('✅ Feedback enviado:', data);
-    alert('¡Gracias por tu feedback! 💙');
+    alert('¡Gracias por el apoyo!');
     cerrarFeedbackModal();
     feedbackSend.disabled = false;
     feedbackSend.textContent = 'Enviar';

@@ -322,6 +322,24 @@ input.error, select.error {
   color: white;
 }
 
+.feedback-bubble::before {
+  content: '!';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  outline: 3px solid #0f0f1a;
+}
+
 .feedback-bubble:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 25px rgba(155, 48, 255, 0.6);
@@ -382,15 +400,17 @@ input.error, select.error {
 .feedback-modal-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
   border-bottom: 1px solid var(--card-border);
+  gap: 15px;
 }
 
 .feedback-modal-header h2 {
   font-size: 1.3rem;
   color: var(--accent);
   margin: 0;
+  flex: 1;
 }
 
 .feedback-close {
@@ -400,12 +420,13 @@ input.error, select.error {
   color: var(--text);
   cursor: pointer;
   padding: 0;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s ease;
+  flex-shrink: 0;
 }
 
 .feedback-close:hover {
