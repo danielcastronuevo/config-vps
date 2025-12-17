@@ -156,7 +156,7 @@ window.addEventListener("DOMContentLoaded", () => {
   fetch("/api/registrar_acceso", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ raspy_id: RASPY_ID, tipo: "page_loaded" })
+    body: JSON.stringify({ raspy_id: RASPY_ID, tipo: "pagina_cargada" })
   }).catch(err => console.warn("No se pudo registrar acceso:", err));
 
   // Reset inputs, selects y radios

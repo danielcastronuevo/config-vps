@@ -136,7 +136,7 @@ io.on('connection', (socket) => {
     console.log(`✅ ID registrada: ${raspy_id} - Club: ${club}`);
     
     // 📊 Registrar acceso
-    registrarAcceso(raspy_id, 'registro');
+    registrarAcceso(raspy_id, 'inicio_de_sesipn');
   });
 
   // Registrar clientes de configuración que quieren ver una Raspy específica
