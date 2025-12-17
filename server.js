@@ -144,9 +144,6 @@ io.on('connection', (socket) => {
     clientesConfig[socket.id] = raspy_id;
     const club = raspyClubs[raspy_id];
     console.log(`📡 Cliente ${socket.id} consulta ID: ${raspy_id}`);
-    
-    // 📊 Registrar acceso
-    registrarAcceso(raspy_id, 'consulta');
 
     // Enviar inmediatamente el estado actual si existe
     if (estadoCanchaActual[raspy_id]) {

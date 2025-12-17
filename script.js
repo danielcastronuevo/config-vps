@@ -152,11 +152,11 @@ let datosPartido = {
 
 // ===================== INICIALIZACIÓN =====================
 window.addEventListener("DOMContentLoaded", () => {
-  // 📊 Registrar acceso a la página de configuración
+  // 📊 Registrar acceso a la página de configuración (solo una vez al cargar)
   fetch("/api/registrar_acceso", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ raspy_id: RASPY_ID, tipo: "acceso_pagina" })
+    body: JSON.stringify({ raspy_id: RASPY_ID, tipo: "page_loaded" })
   }).catch(err => console.warn("No se pudo registrar acceso:", err));
 
   // Reset inputs, selects y radios
