@@ -236,6 +236,44 @@ app.post('/api/enviar_feedback', (req, res) => {
 });
 
 // ====================================
+// Endpoint para obtener logs (API) - PROTEGIDO
+// ====================================
+app.get('/api/get_logs', verificarAutenticacion, (req, res) => {
+  try {
+    const REPORTS_DIR = path.join(__dirname, 'reports');
+    
+    if (!fs.existsSync(REPORTS_DIR)) {
+      return res.json({ logs: [] });
+    }
+
+    let todosLosLogs = [];
+    const archivos = fs.readdirSync(REPORTS_DIR);
+
+    // Leer todos los archivos de logs
+    for (const archivo of archivos) {
+      if (archivo.endsWith('.json')) {
+        const filePath = path.join(REPORTS_DIR, archivo);
+        try {
+          const contenido = fs.readFileSync(filePath, 'utf-8');
+          const logs = JSON.parse(contenido);
+          todosLosLogs = todosLosLogs.concat(logs);
+        } catch (err) {
+          console.error(`Error leyendo archivo ${archivo}:`, err);
+        }
+      }
+    }
+
+    // Ordenar por timestamp descendente (más nuevos primero)
+    todosLosLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    res.json({ logs: todosLosLogs });
+  } catch (error) {
+    console.error('Error obteniendo logs:', error);
+    res.status(500).json({ error: 'Error al obtener logs' });
+  }
+});
+
+// ====================================
 // Endpoint para obtener mensajes (API) - PROTEGIDO
 // ====================================
 app.get('/api/get_messages', verificarAutenticacion, (req, res) => {

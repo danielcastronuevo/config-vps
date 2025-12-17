@@ -152,6 +152,73 @@
       text-transform: uppercase;
     }
 
+    /* ==================== PESTAÑAS ==================== */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      color: rgba(230, 230, 240, 0.6);
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ==================== COLORES DE EVENTOS ==================== */
+    .log-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .log-badge.page_loaded {
+      background: rgba(52, 168, 224, 0.2);
+      color: #34a8e0;
+    }
+
+    .log-badge.configuracion_enviada {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+    }
+
+    .log-badge.inicio_de_sesion {
+      background: rgba(255, 193, 7, 0.2);
+      color: #ffc107;
+    }
+
+    .log-badge.consulta {
+      background: rgba(156, 39, 176, 0.2);
+      color: #9c27b0;
+    }
+
     .messages-container {
       display: grid;
       gap: 15px;
@@ -281,63 +348,145 @@
   <div class="container">
     <header>
       <div class="header-content">
-        <h1><i class="fa-solid fa-message"></i> Panel de Mensajes</h1>
-        <p>Feedback, sugerencias y reportes de usuarios</p>
+        <h1><i class="fa-solid fa-message"></i> Panel de Administración</h1>
+        <p>Mensajes, logs y reportes del sistema</p>
       </div>
       <button id="logout-btn" class="logout-btn">
         <i class="fa-solid fa-sign-out-alt"></i> Salir
       </button>
     </header>
 
-    <div class="filters">
-      <div class="filter-group">
-        <label for="filterRaspy">Filtrar por Raspy ID:</label>
-        <input type="text" id="filterRaspy" placeholder="ej: AABB11">
+    <!-- Pestañas -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="mensajes">
+        <i class="fa-solid fa-message"></i> Mensajes
+      </button>
+      <button class="tab-btn" data-tab="logs">
+        <i class="fa-solid fa-list"></i> Logs
+      </button>
+    </div>
+
+    <!-- PESTAÑA DE MENSAJES -->
+    <div id="tab-mensajes" class="tab-content active">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="filterRaspy">Filtrar por Raspy ID:</label>
+          <input type="text" id="filterRaspy" placeholder="ej: AABB11">
+        </div>
+        <div class="filter-group">
+          <label for="filterClub">Filtrar por Club:</label>
+          <input type="text" id="filterClub" placeholder="ej: altoque">
+        </div>
+        <div class="filter-group">
+          <label for="filterDate">Filtrar por Fecha:</label>
+          <input type="date" id="filterDate">
+        </div>
       </div>
-      <div class="filter-group">
-        <label for="filterClub">Filtrar por Club:</label>
-        <input type="text" id="filterClub" placeholder="ej: altoque">
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="number" id="totalMessages">0</div>
+          <div class="label">Total de Mensajes</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="uniqueRaspys">0</div>
+          <div class="label">Raspys Únicas</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="uniqueClubs">0</div>
+          <div class="label">Clubs Únicos</div>
+        </div>
       </div>
-      <div class="filter-group">
-        <label for="filterDate">Filtrar por Fecha:</label>
-        <input type="date" id="filterDate">
+
+      <div id="error-container"></div>
+      <div id="messages-container" class="messages-container">
+        <div class="loading">
+          <i class="fa-solid fa-spinner"></i>
+          <p>Cargando mensajes...</p>
+        </div>
       </div>
     </div>
 
-    <div class="stats">
-      <div class="stat-card">
-        <div class="number" id="totalMessages">0</div>
-        <div class="label">Total de Mensajes</div>
+    <!-- PESTAÑA DE LOGS -->
+    <div id="tab-logs" class="tab-content">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="filterLogsRaspy">Filtrar por Raspy ID:</label>
+          <input type="text" id="filterLogsRaspy" placeholder="ej: AABB11">
+        </div>
+        <div class="filter-group">
+          <label for="filterLogsType">Filtrar por Tipo:</label>
+          <select id="filterLogsType">
+            <option value="">Todos</option>
+            <option value="page_loaded">Acceso a Página</option>
+            <option value="configuracion_enviada">Configuración Enviada</option>
+            <option value="inicio_de_sesion">Inicio de Sesión</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterLogsDate">Filtrar por Fecha:</label>
+          <input type="date" id="filterLogsDate">
+        </div>
       </div>
-      <div class="stat-card">
-        <div class="number" id="uniqueRaspys">0</div>
-        <div class="label">Raspys Únicas</div>
-      </div>
-      <div class="stat-card">
-        <div class="number" id="uniqueClubs">0</div>
-        <div class="label">Clubs Únicos</div>
-      </div>
-    </div>
 
-    <div id="error-container"></div>
-    <div id="messages-container" class="messages-container">
-      <div class="loading">
-        <i class="fa-solid fa-spinner"></i>
-        <p>Cargando mensajes...</p>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="number" id="totalLogs">0</div>
+          <div class="label">Total de Eventos</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="configSent">0</div>
+          <div class="label">Configuraciones</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="pageLoads">0</div>
+          <div class="label">Accesos a Página</div>
+        </div>
+      </div>
+
+      <div id="error-container-logs"></div>
+      <div id="logs-container" class="messages-container">
+        <div class="loading">
+          <i class="fa-solid fa-spinner"></i>
+          <p>Cargando logs...</p>
+        </div>
       </div>
     </div>
+  </div>
   </div>
 
   <script>
     let allMessages = [];
+    let allLogs = [];
 
+    // ==================== GESTIÓN DE PESTAÑAS ====================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+
+        // Actualizar botones activos
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Actualizar contenido
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(`tab-${tab}`).classList.add('active');
+
+        // Cargar contenido si es necesario
+        if (tab === 'logs' && allLogs.length === 0) {
+          cargarLogs();
+        }
+      });
+    });
+
+    // ==================== MENSAJES ====================
     async function cargarMensajes() {
       try {
         const response = await fetch('/api/get_messages');
         const data = await response.json();
 
         if (data.error) {
-          mostrarError(data.error);
+          mostrarErrorMensajes(data.error);
           return;
         }
 
@@ -346,8 +495,141 @@
         mostrarMensajes(allMessages);
       } catch (error) {
         console.error('Error cargando mensajes:', error);
-        mostrarError('No se pudo cargar los mensajes');
+        mostrarErrorMensajes('No se pudo cargar los mensajes');
       }
+    }
+
+    function mostrarErrorMensajes(mensaje) {
+      const errorContainer = document.getElementById('error-container');
+      errorContainer.innerHTML = `
+        <div class="error">
+          <i class="fa-solid fa-exclamation-circle"></i>
+          <span>${mensaje}</span>
+        </div>
+      `;
+    }
+
+    // ==================== LOGS ====================
+    async function cargarLogs() {
+      try {
+        const response = await fetch('/api/get_logs');
+        const data = await response.json();
+
+        if (data.error) {
+          mostrarErrorLogs(data.error);
+          return;
+        }
+
+        allLogs = data.logs || [];
+        actualizarEstadisticasLogs();
+        mostrarLogs(allLogs);
+      } catch (error) {
+        console.error('Error cargando logs:', error);
+        mostrarErrorLogs('No se pudo cargar los logs');
+      }
+    }
+
+    function mostrarErrorLogs(mensaje) {
+      const errorContainer = document.getElementById('error-container-logs');
+      errorContainer.innerHTML = `
+        <div class="error">
+          <i class="fa-solid fa-exclamation-circle"></i>
+          <span>${mensaje}</span>
+        </div>
+      `;
+    }
+
+    function obtenerBadgeYColor(tipo) {
+      const badges = {
+        'page_loaded': { clase: 'page_loaded', texto: 'Acceso a Página' },
+        'configuracion_enviada': { clase: 'configuracion_enviada', texto: 'Configuración Enviada' },
+        'inicio_de_sesion': { clase: 'inicio_de_sesion', texto: 'Inicio de Sesión' },
+        'consulta': { clase: 'consulta', texto: 'Consulta' }
+      };
+      return badges[tipo] || { clase: 'consulta', texto: tipo };
+    }
+
+    function mostrarLogs(logs) {
+      const container = document.getElementById('logs-container');
+
+      if (logs.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            <p>No hay logs que mostrar</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = logs.map(log => {
+        const badge = obtenerBadgeYColor(log.tipo);
+        const timestamp = new Date(log.timestamp).toLocaleString('es-AR');
+        
+        let contenidoExtra = '';
+        if (log.tipo === 'configuracion_enviada' && log.partido) {
+          contenidoExtra = `
+            <div class="message-meta">
+              <div class="meta-item">
+                <span class="meta-label">Club</span>
+                <span class="meta-value">${log.club || 'Desconocido'}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Duración</span>
+                <span class="meta-value">${log.partido.duracion}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Horario</span>
+                <span class="meta-value">${log.partido.comienzo} - ${log.partido.fin}</span>
+              </div>
+            </div>
+            <div class="message-text">
+              <strong>Partido:</strong><br>
+              Pareja 1: ${log.partido.parejas.pareja1.join(' / ')}<br>
+              Pareja 2: ${log.partido.parejas.pareja2.join(' / ')}<br><br>
+              <strong>Configuración:</strong><br>
+              Calentamiento: ${log.partido.tiempoCalentamiento}<br>
+              Cambio de lado: ${log.partido.cambioDeLado}<br>
+              Games: ${log.partido.tipoGames}
+            </div>
+          `;
+        } else if (log.club) {
+          contenidoExtra = `
+            <div class="message-meta">
+              <div class="meta-item">
+                <span class="meta-label">Club</span>
+                <span class="meta-value">${log.club}</span>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="message-card">
+            <div class="message-header">
+              <div class="message-id">${log.raspy_id}</div>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <span class="log-badge ${badge.clase}">${badge.texto}</span>
+                <div class="message-timestamp">
+                  <i class="fa-solid fa-clock"></i>
+                  ${timestamp}
+                </div>
+              </div>
+            </div>
+            ${contenidoExtra}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function actualizarEstadisticasLogs() {
+      const totalLogs = allLogs.length;
+      const configSent = allLogs.filter(l => l.tipo === 'configuracion_enviada').length;
+      const pageLoads = allLogs.filter(l => l.tipo === 'page_loaded').length;
+
+      document.getElementById('totalLogs').textContent = totalLogs;
+      document.getElementById('configSent').textContent = configSent;
+      document.getElementById('pageLoads').textContent = pageLoads;
     }
 
     function mostrarError(mensaje) {
@@ -409,12 +691,12 @@
       return div.innerHTML;
     }
 
-    // Filtros
-    document.getElementById('filterRaspy').addEventListener('input', aplicarFiltros);
-    document.getElementById('filterClub').addEventListener('input', aplicarFiltros);
-    document.getElementById('filterDate').addEventListener('change', aplicarFiltros);
+    // Filtros de mensajes
+    document.getElementById('filterRaspy').addEventListener('input', aplicarFiltrosMensajes);
+    document.getElementById('filterClub').addEventListener('input', aplicarFiltrosMensajes);
+    document.getElementById('filterDate').addEventListener('change', aplicarFiltrosMensajes);
 
-    function aplicarFiltros() {
+    function aplicarFiltrosMensajes() {
       const filterRaspy = document.getElementById('filterRaspy').value.toLowerCase();
       const filterClub = document.getElementById('filterClub').value.toLowerCase();
       const filterDate = document.getElementById('filterDate').value;
@@ -428,6 +710,27 @@
       });
 
       mostrarMensajes(mensajesFiltrados);
+    }
+
+    // Filtros de logs
+    document.getElementById('filterLogsRaspy').addEventListener('input', aplicarFiltrosLogs);
+    document.getElementById('filterLogsType').addEventListener('change', aplicarFiltrosLogs);
+    document.getElementById('filterLogsDate').addEventListener('change', aplicarFiltrosLogs);
+
+    function aplicarFiltrosLogs() {
+      const filterRaspy = document.getElementById('filterLogsRaspy').value.toLowerCase();
+      const filterType = document.getElementById('filterLogsType').value;
+      const filterDate = document.getElementById('filterLogsDate').value;
+
+      const logsFiltrados = allLogs.filter(log => {
+        const coincideRaspy = log.raspy_id.toLowerCase().includes(filterRaspy);
+        const coincideTipo = !filterType || log.tipo === filterType;
+        const coincideFecha = !filterDate || log.timestamp.startsWith(filterDate);
+
+        return coincideRaspy && coincideTipo && coincideFecha;
+      });
+
+      mostrarLogs(logsFiltrados);
     }
 
     // Cargar al iniciar
