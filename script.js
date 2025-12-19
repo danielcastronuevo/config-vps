@@ -164,6 +164,16 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
   document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
+  // Establecer imagen del club
+  const clubLogoImg = document.getElementById("club-logo");
+  if (clubLogoImg) {
+    clubLogoImg.src = `imgs/clubs/${CLUB}.png`;
+    clubLogoImg.onerror = () => {
+      // Fallback a la-esquina si el club no existe
+      clubLogoImg.src = 'imgs/clubs/la-esquina.png';
+    };
+  }
+
   // Deshabilitar botón Step1 por defecto
   step1NextBtn.disabled = true;
 
