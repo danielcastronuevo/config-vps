@@ -5,6 +5,7 @@ const fs = require('fs');
 const { Server } = require('socket.io');
 const session = require('express-session');
 const rateLimit = require('express-rate-limit');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const server = http.createServer(app);
@@ -95,6 +96,52 @@ function sanitizarInput(input) {
     .trim()
     .substring(0, 100) // Limitar longitud
     .replace(/[<>\"'%;()&+]/g, ''); // Remover caracteres especiales
+}
+
+// ====================================
+// Configuración de Email - Hostinger
+// ====================================
+const transporter = nodemailer.createTransport({
+  host: 'smtp.hostinger.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'info@altoquepadel.com',
+    pass: 'C@~[o#~RL1w'
+  }
+});
+
+// Función para enviar email de notificación
+async function enviarEmailNotificacion(raspy_id, club, mensaje) {
+  try {
+    await transporter.sendMail({
+      from: 'info@altoquepadel.com',
+      to: 'info@altoquepadel.com',
+      subject: `Nuevo Mensaje - ${club || raspy_id}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #2c3e50;">Nuevo Mensaje Recibido</h2>
+          <hr style="border: none; border-top: 2px solid #3498db;">
+          <p><strong>📍 Ubicación:</strong> ${club || raspy_id}</p>
+          <p><strong>⏰ Hora:</strong> ${new Date().toLocaleString('es-AR')}</p>
+          <hr style="border: none; border-top: 1px solid #ecf0f1;">
+          <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #3498db; margin: 15px 0;">
+            <p><strong>Mensaje:</strong></p>
+            <p style="margin: 10px 0; color: #2c3e50;">${mensaje}</p>
+          </div>
+          <hr style="border: none; border-top: 1px solid #ecf0f1;">
+          <p style="color: #7f8c8d; font-size: 12px;">
+            Sistema automático - Altoque Padel
+          </p>
+        </div>
+      `
+    });
+    console.log(`✉️ Email enviado a info@altoquepadel.com`);
+    return true;
+  } catch (error) {
+    console.error('❌ Error al enviar email:', error.message);
+    return false;
+  }
 }
 
 // ====================================
@@ -375,15 +422,24 @@ app.post('/api/registrar_acceso', (req, res) => {
 // ====================================
 // Endpoint para enviar feedback
 // ====================================
-app.post('/api/enviar_feedback', (req, res) => {
+app.post('/api/enviar_feedback', async (req, res) => {
   const { raspy_id, club, mensaje } = req.body;
   
   if (!raspy_id || !mensaje) {
     return res.status(400).json({ error: 'Faltan raspy_id o mensaje' });
   }
   
+  // Guardar el feedback en archivo
   registrarFeedback(raspy_id, club || 'desconocido', mensaje);
-  res.json({ mensaje: 'Feedback registrado exitosamente' });
+  
+  // Enviar email de notificación de forma asincrónica
+  // (sin esperar a que termine para responder al cliente)
+  enviarEmailNotificacion(raspy_id, club || 'desconocido', mensaje);
+  
+  res.json({ 
+    mensaje: 'Feedback registrado exitosamente',
+    emailEnviado: true
+  });
 });
 
 // ====================================
