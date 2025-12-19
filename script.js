@@ -590,6 +590,7 @@ finishBtn.addEventListener("click", () => {
         mac: pulserasDisponibles[datosPartido.jugadores.pareja2.pulsera] || ""
       }
     },
+    club: CLUB,
     mensaje: "actualizado_sin_cache_v2" // <- Mensaje de pruebas de caché 
   };
 
