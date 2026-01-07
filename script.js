@@ -271,7 +271,7 @@ function setEstadoCancha(ocupada) {
   }
 
   // 🔹 Bloquear botón Finalizar si la cancha no está libre
-  finishBtn.disabled = canchaOcupada || !duracionSelect.value;
+  validateStep4();
 }
 
 // ===================== STEP 1 =====================
@@ -413,6 +413,14 @@ function generateTimeOptions() {
 }
 
 function validarHorarioLogico() {
+  const isTorneo = modoTorneoCheckbox.checked;
+  if (isTorneo) {
+    // Si es torneo, no nos importa el horario de fin para la validación
+    step4Error.style.display = "none";
+    duracionSelect.classList.remove("error");
+    return true;
+  }
+
   const ahora = new Date();
   const [hInicio, mInicio] = inputInicio.value.split(':').map(Number);
   const inicio = new Date();
@@ -433,7 +441,6 @@ function validarHorarioLogico() {
   } else {
     // restauramos mensaje original si todo está bien
     step4Error.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Debes seleccionar la duración del partido';
-    validateStep4();
     return true;
   }
 }
@@ -494,19 +501,37 @@ setInterval(updateInicioSelect, 60000); // cada minuto
 // Validación de Step 4
 function validateStep4() {
   const isTorneo = modoTorneoCheckbox.checked;
-  if (duracionSelect.value || isTorneo) {
+
+  let step4Valido = false;
+
+  if (isTorneo) {
+    // Validación de Torneo: debe haber categoría (si es MANUAL, input no vacío)
+    const categoriaValida = categoriaTorneoSelect.value !== "MANUAL" || categoriaManualInput.value.trim() !== "";
+    step4Valido = categoriaValida;
+
+    // En modo torneo siempre ocultamos el error de duración
     step4Error.style.display = "none";
     duracionSelect.classList.remove("error");
   } else {
-    step4Error.style.display = "block";
-    duracionSelect.classList.add("error");
+    // Validación normal: debe haber duración y el horario debe ser lógico
+    const tieneDuracion = duracionSelect.value !== "";
+    const horarioValido = tieneDuracion ? validarHorarioLogico() : true;
+
+    step4Valido = tieneDuracion && horarioValido;
+
+    if (tieneDuracion) {
+      step4Error.style.display = horarioValido ? "none" : "block";
+      duracionSelect.classList.toggle("error", !horarioValido);
+    } else {
+      step4Error.style.display = "block";
+      duracionSelect.classList.add("error");
+    }
   }
-  validateFinalizar(); // habilita/deshabilita botón Finalizar según cancha y duración
+
+  validateFinalizar(step4Valido);
 }
 
-function validateFinalizar() {
-  const isTorneo = modoTorneoCheckbox.checked;
-  const step4Valido = duracionSelect.value || isTorneo;
+function validateFinalizar(step4Valido) {
   finishBtn.disabled = !(step4Valido && !canchaOcupada);
 }
 
@@ -566,6 +591,11 @@ modoTorneoCheckbox.addEventListener("change", () => {
 
 categoriaTorneoSelect.addEventListener("change", () => {
   categoriaManualContainer.style.display = categoriaTorneoSelect.value === "MANUAL" ? "block" : "none";
+  validateStep4();
+});
+
+categoriaManualInput.addEventListener("input", () => {
+  validateStep4();
 });
 
 // ===================== NAVEGACIÓN =====================
