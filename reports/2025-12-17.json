@@ -1,0 +1,161 @@
+[
+  {
+    "timestamp": "2025-12-17T15:05:37.157Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesipn"
+  },
+  {
+    "timestamp": "2025-12-17T15:06:35.719Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "parejas": {
+        "pareja1": [
+          "2",
+          "3"
+        ],
+        "pareja2": [
+          "4",
+          "5"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A02",
+        "pareja2": "A04"
+      },
+      "duracion": "60 minutos",
+      "comienzo": "11:30",
+      "fin": "12:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-17T15:15:25.764Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:23:34.051Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:23:37.055Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:28:17.507Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-17T15:28:21.308Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:30:10.492Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:33:13.063Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:35:04.400Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:38:26.882Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:38:33.165Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:38:47.805Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T15:39:16.384Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T16:50:20.656Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T17:23:43.241Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-17T17:23:44.804Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T17:24:58.654Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T17:30:34.893Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T17:34:53.048Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T17:48:39.699Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-17T17:48:41.672Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T19:43:16.845Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T20:16:10.850Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-17T21:33:41.255Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-17T23:40:10.259Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  }
+]

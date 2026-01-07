@@ -1,0 +1,129 @@
+[
+  {
+    "timestamp": "2025-12-30T00:04:34.520Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-30T00:09:53.207Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-30T00:11:37.644Z",
+    "raspy_id": "4706A0C4",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Yaqui",
+        "July",
+        "Maru",
+        "Dario"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Yaqui",
+          "July"
+        ],
+        "pareja2": [
+          "Maru",
+          "Dario"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "B02"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "21:00",
+      "fin": "21:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-30T00:11:45.654Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-30T00:53:54.581Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-30T00:56:23.032Z",
+    "raspy_id": "4706A0C4",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Lili",
+        "Omar",
+        "July",
+        "Dario"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Lili",
+          "Omar"
+        ],
+        "pareja2": [
+          "July",
+          "Dario"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B02",
+        "pareja2": "B01"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "21:30",
+      "fin": "22:00",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-30T01:03:18.430Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-30T02:15:24.028Z",
+    "raspy_id": "4706A0C4",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Lili",
+        ".",
+        "July",
+        ","
+      ],
+      "parejas": {
+        "pareja1": [
+          "Lili",
+          "."
+        ],
+        "pareja2": [
+          "July",
+          ","
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B02",
+        "pareja2": "B01"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "23:00",
+      "fin": "23:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  }
+]

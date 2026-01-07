@@ -1,0 +1,337 @@
+[
+  {
+    "timestamp": "2025-12-21T05:55:36.558Z",
+    "raspy_id": "780462D3",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T13:59:06.229Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T16:07:59.000Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T16:37:06.509Z",
+    "raspy_id": "780462D3",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T16:37:13.872Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T16:38:01.154Z",
+    "raspy_id": "780462D3",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Pipe",
+        "Mama",
+        "Julian",
+        "Charo"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Pipe",
+          "Mama"
+        ],
+        "pareja2": [
+          "Julian",
+          "Charo"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "B02"
+      },
+      "duracion": "60 minutos",
+      "comienzo": "13:00",
+      "fin": "14:00",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-21T17:09:51.841Z",
+    "raspy_id": "780462D3",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T17:11:37.272Z",
+    "raspy_id": "780462D3",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T17:12:26.184Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T17:12:59.555Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T17:14:40.906Z",
+    "raspy_id": "780462D3",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Pipe",
+        "Chari",
+        "Jacqueline",
+        "Julian"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Pipe",
+          "Chari"
+        ],
+        "pareja2": [
+          "Jacqueline",
+          "Julian"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "B02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "14:00",
+      "fin": "15:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-21T17:32:52.571Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T18:46:56.803Z",
+    "raspy_id": "780462D3",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T18:59:24.204Z",
+    "raspy_id": "780462D3",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T18:59:34.970Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T19:00:16.888Z",
+    "raspy_id": "780462D3",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Pipe",
+        "Charito",
+        "Julian",
+        "Jacqueline"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Pipe",
+          "Charito"
+        ],
+        "pareja2": [
+          "Julian",
+          "Jacqueline"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "B02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "16:00",
+      "fin": "17:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-21T19:08:01.101Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T19:17:00.359Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T19:37:35.312Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T19:55:44.192Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T19:56:55.480Z",
+    "raspy_id": "780462D3",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T20:45:16.477Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:03:22.017Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:05:29.450Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:05:42.399Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T21:05:54.347Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A03",
+        "pareja2": "A01"
+      },
+      "duracion": "60 minutos",
+      "comienzo": "17:30",
+      "fin": "18:30",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-21T21:12:50.492Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:14:00.089Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:14:20.943Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:15:10.998Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:18:15.159Z",
+    "raspy_id": "2B25C96C",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:21:06.197Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:26:48.561Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:30:42.496Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T21:31:19.789Z",
+    "raspy_id": "4706A0C4",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-21T21:31:58.008Z",
+    "raspy_id": "4706A0C4",
+    "club": "breakpoint",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "probando",
+        "nueva_interfaz",
+        "como",
+        "se_ve?"
+      ],
+      "parejas": {
+        "pareja1": [
+          "probando",
+          "nueva_interfaz"
+        ],
+        "pareja2": [
+          "como",
+          "se_ve?"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "B02"
+      },
+      "duracion": "120 minutos",
+      "comienzo": "18:30",
+      "fin": "20:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-21T22:07:52.852Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-21T23:25:21.308Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  }
+]

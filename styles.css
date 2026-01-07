@@ -1,13 +1,12 @@
-
 :root {
   --bg-color: #0f0f1a;
   --bg-alt: #1a1a2e;
-  --bg-alt2: rgba(255,255,255,0.02);
+  --bg-alt2: rgba(255, 255, 255, 0.02);
   --text: #e6e6f0;
   --accent: #9b30ff;
   --accent-alt: #f5c518;
   --card-bg: #22223b;
-  --card-border: rgba(255,255,255,0.08);
+  --card-border: rgba(255, 255, 255, 0.08);
   --radius: 12px;
   --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -18,6 +17,7 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   background: var(--bg-color);
   font-family: var(--font);
@@ -33,12 +33,14 @@ header {
   width: 100%;
   border-bottom: 1px solid var(--card-border);
 }
+
 .header-content {
   max-width: 480px;
   margin: 0 auto;
   padding: 16px;
   text-align: center;
 }
+
 header h2 {
   font-size: 1.2rem;
   font-weight: 600;
@@ -129,13 +131,13 @@ header h2 {
   align-items: center;
   gap: 6px;
   background: var(--card-bg);
-border: 1px solid var(--card-border);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius);
   padding: 16px;
   color: var(--accent-alt);
 }
 
-.cancha-mensaje i{
+.cancha-mensaje i {
   margin-right: 5px;
 }
 
@@ -152,9 +154,11 @@ main {
   margin: 0 auto;
   padding: 20px 16px;
 }
+
 section.step {
   display: none;
 }
+
 section.active {
   display: block;
 }
@@ -167,11 +171,13 @@ section.active {
   padding: 16px;
   margin-bottom: 24px;
 }
+
 h3 {
   font-size: 1rem;
   margin-bottom: 12px;
   color: var(--accent);
 }
+
 h4 {
   font-size: 0.95rem;
   margin-bottom: 10px;
@@ -190,9 +196,11 @@ select {
   color: var(--text);
   font-size: 1rem;
 }
+
 input[readonly] {
   opacity: 0.7;
 }
+
 label {
   display: block;
   margin-bottom: 10px;
@@ -205,6 +213,7 @@ label input[type="radio"] {
   margin-right: 8px;
   accent-color: var(--accent);
 }
+
 section.step label {
   margin-bottom: 12px;
   display: flex;
@@ -223,6 +232,7 @@ section.step label {
   gap: 12px;
   margin-top: 20px;
 }
+
 button {
   flex: 1;
   padding: 14px;
@@ -233,23 +243,28 @@ button {
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
 }
+
 button:active {
   transform: scale(0.97);
 }
+
 button.next,
 button.finish {
   background: var(--accent);
   color: #fff;
 }
+
 button.next:hover,
 button.finish:hover {
   background: #7a1fff;
 }
+
 button.prev {
   background: var(--card-bg);
   color: var(--text);
   border: 1px solid var(--card-border);
 }
+
 button.prev:hover {
   background: var(--bg-alt2);
 }
@@ -267,12 +282,14 @@ select .placeholder {
   margin-top: 8px;
   display: none;
 }
+
 .error-msg i {
   margin-right: 6px;
 }
 
 /* Input en error */
-input.error, select.error {
+input.error,
+select.error {
   border-color: var(--accent-alt);
 }
 
@@ -281,10 +298,13 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-input.error, select.error {
+
+input.error,
+select.error {
   border-color: #f5c518;
-  background-color: rgba(245,197,24,0.1);
+  background-color: rgba(245, 197, 24, 0.1);
 }
+
 .error-msg {
   color: #f5c518;
   font-size: 0.9rem;
@@ -297,10 +317,13 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-input.error, select.error {
+
+input.error,
+select.error {
   border-color: #f5c518;
-  background-color: rgba(245,197,24,0.1);
+  background-color: rgba(245, 197, 24, 0.1);
 }
+
 .error-msg {
   color: #f5c518;
   font-size: 0.9rem;
@@ -308,7 +331,7 @@ input.error, select.error {
   display: none;
 }
 
-#step1-error{
+#step1-error {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
@@ -317,9 +340,12 @@ input.error, select.error {
 }
 
 #fin-partido {
-  user-select: none;      /* Evita seleccionar el texto */
-  pointer-events: none;   /* Evita click y foco en el input */
-  cursor: default;        /* Cursor normal, no de escritura */
+  user-select: none;
+  /* Evita seleccionar el texto */
+  pointer-events: none;
+  /* Evita click y foco en el input */
+  cursor: default;
+  /* Cursor normal, no de escritura */
 }
 
 /*CANCHA DESCONECTADA o CHEQUEANDO*/
@@ -328,13 +354,16 @@ input.error, select.error {
   background-color: #777;
   color: #fff;
 }
+
 .cancha-desconectada .led {
   background-color: gray;
 }
 
 .cancha-check .led {
-  background-color: #ffcc00; /* led amarillo */
+  background-color: #ffcc00;
+  /* led amarillo */
 }
+
 /* ==================== BOTÓN FLOTANTE DE FEEDBACK ==================== */
 
 .feedback-bubble {
@@ -407,6 +436,7 @@ input.error, select.error {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -429,6 +459,7 @@ input.error, select.error {
     transform: translateY(30px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -549,4 +580,82 @@ input.error, select.error {
 .feedback-btn-send:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ==================== TOGGLE SWITCH ==================== */
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 0px;
+}
+
+section.step .switch-container {
+  margin-bottom: 0px;
+}
+
+.switch-label {
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--card-border);
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #888;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked+.slider {
+  background-color: rgba(155, 48, 255, 0.2);
+  border-color: var(--accent);
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+  background-color: var(--accent);
+}
+
+.card-torneo {
+  border: 1.5px solid var(--card-border);
+  transition: all 0.3s ease;
+}
+
+.card-torneo.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(155, 48, 255, 0.15);
 }

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,161 +8,190 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
-<header>
-  <div class="header-content">
-    <div class="header-top">
-      <img src="imgs/logo-us.png" alt="Logo" class="header-logo">
-      <div class="header-divider"></div>
-      <h2><i class="fa-solid fa-table-tennis-paddle-ball"></i> Configura tu partido</h2>
-    </div>
+  <header>
+    <div class="header-content">
+      <div class="header-top">
+        <img src="imgs/logo-us.png" alt="Logo" class="header-logo">
+        <div class="header-divider"></div>
+        <h2><i class="fa-solid fa-table-tennis-paddle-ball"></i> Configura tu partido</h2>
+      </div>
 
-    <div class="separator"></div>
-    
-    <!-- Estado de la cancha -->
-    <div id="estado-cancha" class="cancha-check">
-      <span class="led"></span>
-      <span class="texto-estado">COMPROBANDO ...</span>
-    </div>
-    
-    <div id="cancha-msg" class="cancha-mensaje" style="display:none;">
-      <p><i class="fa-solid fa-circle-exclamation"></i>
-    Partido en curso. Espere a que finalice para configurar uno nuevo. No recargue ni cierre esta página, de lo contrario deberá completar nuevamente el formulario.</p>
-    </div>
+      <div class="separator"></div>
 
+      <!-- Estado de la cancha -->
+      <div id="estado-cancha" class="cancha-check">
+        <span class="led"></span>
+        <span class="texto-estado">COMPROBANDO ...</span>
+      </div>
+
+      <div id="cancha-msg" class="cancha-mensaje" style="display:none;">
+        <p><i class="fa-solid fa-circle-exclamation"></i>
+          Partido en curso. Espere a que finalice para configurar uno nuevo. No recargue ni cierre esta página, de lo
+          contrario deberá completar nuevamente el formulario.</p>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+    <!-- Paso 1: Nombres y pulseras -->
+    <section class="step active" id="step1">
+      <div class="card">
+        <div class="club-header">
+          <h3 style="margin-bottom: 0;">Club:</h3>
+          <img id="club-logo" src="imgs/clubs/la-esquina.png" alt="Club Logo" class="club-logo-img">
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Pareja 1</h3>
+        <input type="text" id="p1j1" placeholder="Jugador/a 1">
+        <input type="text" id="p1j2" placeholder="Jugador/a 2">
+        <label>Pulsera:</label>
+        <select id="bracelet-team1" required>
+          <option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>
+          <option value="roja">Roja</option>
+          <option value="azul">Azul</option>
+          <option value="verde">Verde</option>
+          <option value="amarilla">Amarilla</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Pareja 2</h3>
+        <input type="text" id="p2j1" placeholder="Jugador/a 3">
+        <input type="text" id="p2j2" placeholder="Jugador/a 4">
+        <label>Pulsera:</label>
+        <select id="bracelet-team2" required>
+          <option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>
+          <option value="roja">Roja</option>
+          <option value="azul">Azul</option>
+          <option value="verde">Verde</option>
+          <option value="amarilla">Amarilla</option>
+        </select>
+      </div>
+
+      <div class="error-msg" id="step1-error"><i class="fa-solid fa-triangle-exclamation"></i> Ningún campo puede quedar
+        vacío ni repetido.</div>
+
+      <div class="nav-buttons">
+        <button class="next" id="step1-next" disabled>Siguiente</button>
+      </div>
+    </section>
+
+    <!-- Paso 3: Modos de juego -->
+    <section class="step" id="step3">
+      <div class="card">
+        <h3>Tiempo de calentamiento</h3>
+        <label><input type="radio" name="calentamiento" value="0" required> Sin calentamiento</label>
+        <label><input type="radio" name="calentamiento" value="5"> 5 minutos</label>
+        <label><input type="radio" name="calentamiento" value="10"> 10 minutos</label>
+      </div>
+
+      <div class="card">
+        <h3>Cambio de lado</h3>
+        <label><input type="radio" name="cambio" value="set" required> Al finalizar cada SET</label>
+        <label><input type="radio" name="cambio" value="tradicional"> Tradicional (impares)</label>
+        <label><input type="radio" name="cambio" value="ninguno"> Sin cambios</label>
+      </div>
+
+      <div class="card">
+        <h3>Games</h3>
+        <label><input type="radio" name="games" value="punto-oro" required> Punto de oro</label>
+        <label><input type="radio" name="games" value="deuce"> Deuce / Advantage</label>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="prev">Volver</button>
+        <button class="next" id="step3-next">Siguiente</button>
+      </div>
+    </section>
+
+    <!-- Paso 4: Duración y comienzo -->
+    <section class="step" id="step4">
+      <div id="card-duracion" class="card">
+        <h3>Duración del partido</h3>
+        <select id="duracion" required>
+          <option value="30">30 minutos</option>
+          <option value="60">1 hora</option>
+          <option value="90">1 hora y media</option>
+          <option value="120">2 horas</option>
+        </select>
+      </div>
+
+
+      <div id="card-horarios" class="card">
+        <h3>Inicio y finalización del partido</h3>
+        <div id="horarios-config">
+          <label>Hora de inicio:</label>
+          <select id="inicio-partido"></select>
+          <label>Hora de finalización:</label>
+          <input type="text" id="fin-partido" readonly>
+        </div>
+      </div>
+
+      <div id="card-torneo-container" class="card card-torneo">
+        <label class="switch-container">
+          <span class="switch-label">MODO TORNEO</span>
+          <div class="switch">
+            <input type="checkbox" id="modo-torneo">
+            <span class="slider"></span>
+          </div>
+        </label>
+
+        <div id="torneo-config"
+          style="display: none; margin-top: 20px; padding: 15px; background: rgba(155, 48, 255, 0.05); border-radius: var(--radius); border: 1px dashed var(--accent);">
+          <label>Categoría:</label>
+          <select id="categoria-torneo">
+            <option value="Cab.7ma">Cab.7ma</option>
+            <option value="Cab.8va">Cab.8va</option>
+            <option value="MANUAL">MANUAL</option>
+          </select>
+          <div id="categoria-manual-container" style="display: none;">
+            <label>Especificar Categoría:</label>
+            <input type="text" id="categoria-manual" placeholder="Categoría Manual">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="nav-buttons">
+        <button class="prev">Volver</button>
+        <button class="finish">Finalizar</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 💬 Botón flotante de feedback -->
+  <div id="feedback-bubble" class="feedback-bubble">
+    <i class="fa-solid fa-comment-dots"></i>
   </div>
-</header>
 
-<main>
-  <!-- Paso 1: Nombres y pulseras -->
-  <section class="step active" id="step1">
-    <div class="card">
-      <div class="club-header">
-        <h3 style="margin-bottom: 0;">Club:</h3>
-        <img id="club-logo" src="imgs/clubs/la-esquina.png" alt="Club Logo" class="club-logo-img">
+  <!-- 💬 Modal de feedback -->
+  <div id="feedback-modal" class="feedback-modal" style="display: none;">
+    <div class="feedback-modal-content">
+      <div class="feedback-modal-header">
+        <h2>💬 Contanos qué te pareció</h2>
+      </div>
+      <div class="feedback-modal-body">
+        <p>¿Algo no te funcionó como esperabas?
+          ¿Tenés una idea para mejorar el sistema o simplemente querés contarnos qué te parece?
+          Te leemos.</p>
+        <textarea id="feedback-text" placeholder="Escribí acá lo que quieras contarnos:
+algo que no te funcionó, una idea, o tu opinión sobre la aplicación." rows="6"></textarea>
+      </div>
+      <div class="feedback-modal-footer">
+        <button id="feedback-cancel" class="feedback-btn-cancel">Cancelar</button>
+        <button id="feedback-send" class="feedback-btn-send">Enviar</button>
       </div>
     </div>
-
-    <div class="card">
-      <h3>Pareja 1</h3>
-      <input type="text" id="p1j1" placeholder="Jugador/a 1">
-      <input type="text" id="p1j2" placeholder="Jugador/a 2">
-      <label>Pulsera:</label>
-      <select id="bracelet-team1" required>
-        <option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>
-        <option value="roja">Roja</option>
-        <option value="azul">Azul</option>
-        <option value="verde">Verde</option>
-        <option value="amarilla">Amarilla</option>
-      </select>
-    </div>
-
-    <div class="card">
-      <h3>Pareja 2</h3>
-      <input type="text" id="p2j1" placeholder="Jugador/a 3">
-      <input type="text" id="p2j2" placeholder="Jugador/a 4">
-      <label>Pulsera:</label>
-      <select id="bracelet-team2" required>
-        <option value="" disabled selected hidden class="placeholder">Seleccionar Pulsera</option>
-        <option value="roja">Roja</option>
-        <option value="azul">Azul</option>
-        <option value="verde">Verde</option>
-        <option value="amarilla">Amarilla</option>
-      </select>
-    </div>
-
-    <div class="error-msg" id="step1-error"><i class="fa-solid fa-triangle-exclamation"></i> Ningún campo puede quedar vacío ni repetido.</div>
-
-    <div class="nav-buttons">
-      <button class="next" id="step1-next" disabled>Siguiente</button>
-    </div>
-  </section>
-
-  <!-- Paso 3: Modos de juego -->
-  <section class="step" id="step3">
-    <div class="card">
-      <h3>Tiempo de calentamiento</h3>
-      <label><input type="radio" name="calentamiento" value="0" required> Sin calentamiento</label>
-      <label><input type="radio" name="calentamiento" value="5"> 5 minutos</label>
-      <label><input type="radio" name="calentamiento" value="10"> 10 minutos</label>
-    </div>
-
-    <div class="card">
-      <h3>Cambio de lado</h3>
-      <label><input type="radio" name="cambio" value="set" required> Al finalizar cada SET</label>
-      <label><input type="radio" name="cambio" value="tradicional"> Tradicional (impares)</label>
-      <label><input type="radio" name="cambio" value="ninguno"> Sin cambios</label>
-    </div>
-
-    <div class="card">
-      <h3>Games</h3>
-      <label><input type="radio" name="games" value="punto-oro" required> Punto de oro</label>
-      <label><input type="radio" name="games" value="deuce"> Deuce / Advantage</label>
-    </div>
-
-    <div class="nav-buttons">
-      <button class="prev">Volver</button>
-      <button class="next" id="step3-next">Siguiente</button>
-    </div>
-  </section>
-
-  <!-- Paso 4: Duración y comienzo -->
-  <section class="step" id="step4">
-    <div class="card">
-      <h3>Duración del partido</h3>
-      <select id="duracion" required>
-        <option value="30">30 minutos</option>
-        <option value="60">1 hora</option>
-        <option value="90">1 hora y media</option>
-        <option value="120">2 horas</option>
-      </select>
-    </div>
-
-
-<div class="card">
-  <h3>Inicio y finalización del partido</h3>
-  <label>Hora de inicio:</label>
-<select id="inicio-partido"></select>
-  <label>Hora de finalización:</label>
-  <input type="text" id="fin-partido" readonly>
-</div>
-
-
-    <div class="nav-buttons">
-      <button class="prev">Volver</button>
-      <button class="finish">Finalizar</button>
-    </div>
-  </section>
-</main>
-
-<!-- 💬 Botón flotante de feedback -->
-<div id="feedback-bubble" class="feedback-bubble">
-  <i class="fa-solid fa-comment-dots"></i>
-</div>
-
-<!-- 💬 Modal de feedback -->
-<div id="feedback-modal" class="feedback-modal" style="display: none;">
-  <div class="feedback-modal-content">
-    <div class="feedback-modal-header">
-      <h2>💬 Contanos qué te pareció</h2>
-    </div>
-    <div class="feedback-modal-body">
-      <p>¿Algo no te funcionó como esperabas?
-¿Tenés una idea para mejorar el sistema o simplemente querés contarnos qué te parece?
-Te leemos.</p>
-      <textarea id="feedback-text" placeholder="Escribí acá lo que quieras contarnos:
-algo que no te funcionó, una idea, o tu opinión sobre la aplicación." rows="6"></textarea>
-    </div>
-    <div class="feedback-modal-footer">
-      <button id="feedback-cancel" class="feedback-btn-cancel">Cancelar</button>
-      <button id="feedback-send" class="feedback-btn-send">Enviar</button>
-    </div>
   </div>
-</div>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="script.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
 </body>
-</html>
 
+</html>

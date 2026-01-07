@@ -1,0 +1,292 @@
+[
+  {
+    "timestamp": "2025-12-18T00:15:26.077Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T00:17:04.170Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T00:20:16.065Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T01:00:53.895Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T01:47:08.721Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:34:39.307Z",
+    "raspy_id": "4D92BF78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:35:25.386Z",
+    "raspy_id": "4D92BF78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:40:52.703Z",
+    "raspy_id": "33967C78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:43:59.167Z",
+    "raspy_id": "33967C78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:51:05.435Z",
+    "raspy_id": "33967C78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:52:53.769Z",
+    "raspy_id": "33967C78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T02:54:15.284Z",
+    "raspy_id": "33967C78",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-18T02:54:53.042Z",
+    "raspy_id": "33967C78",
+    "club": "hulk-padel",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Diego",
+        "Alejandro",
+        "Pepito",
+        "Genaro"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Diego",
+          "Alejandro"
+        ],
+        "pareja2": [
+          "Pepito",
+          "Genaro"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A01",
+        "pareja2": "A03"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "23:-30",
+      "fin": "23:00",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-18T02:55:01.551Z",
+    "raspy_id": "33967C78",
+    "club": "hulk-padel",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Diego",
+        "Alejandro",
+        "Pepito",
+        "Genaro"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Diego",
+          "Alejandro"
+        ],
+        "pareja2": [
+          "Pepito",
+          "Genaro"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A01",
+        "pareja2": "A03"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "00:00",
+      "fin": "00:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-18T02:55:10.050Z",
+    "raspy_id": "33967C78",
+    "club": "hulk-padel",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Diego",
+        "Alejandro",
+        "Pepito",
+        "Genaro"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Diego",
+          "Alejandro"
+        ],
+        "pareja2": [
+          "Pepito",
+          "Genaro"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A01",
+        "pareja2": "A03"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "00:00",
+      "fin": "00:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-18T02:55:22.467Z",
+    "raspy_id": "33967C78",
+    "club": "hulk-padel",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Diego",
+        "Alejandro",
+        "Pepito",
+        "Genaro"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Diego",
+          "Alejandro"
+        ],
+        "pareja2": [
+          "Pepito",
+          "Genaro"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A01",
+        "pareja2": "A03"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "00:30",
+      "fin": "01:00",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-18T02:57:53.185Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T03:04:17.166Z",
+    "raspy_id": "33967C78",
+    "club": "hulk-padel",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Diego",
+        "Alejandro",
+        "Pepito",
+        "Genaro"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Diego",
+          "Alejandro"
+        ],
+        "pareja2": [
+          "Pepito",
+          "Genaro"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A01",
+        "pareja2": "A03"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "00:00",
+      "fin": "01:30",
+      "tiempoCalentamiento": "Sin calentamiento",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2025-12-18T03:04:39.390Z",
+    "raspy_id": "E584F2E8",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2025-12-18T03:06:36.382Z",
+    "raspy_id": "33967C78",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T13:31:19.820Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T15:49:17.297Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T15:51:52.043Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T18:51:30.611Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T18:55:16.609Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T19:32:11.601Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T23:36:01.963Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T23:40:02.868Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-18T23:40:33.142Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  }
+]

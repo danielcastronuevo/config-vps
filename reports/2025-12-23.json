@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-12-23T01:07:56.442Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-23T13:11:12.607Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-23T16:07:51.147Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2025-12-23T19:08:04.572Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  }
+]

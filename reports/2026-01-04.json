@@ -1,0 +1,97 @@
+[
+  {
+    "timestamp": "2026-01-04T19:55:18.021Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T19:58:07.545Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T20:03:13.968Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T20:18:42.237Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T20:19:26.786Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T20:21:58.023Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T20:56:25.653Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T21:32:34.434Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T21:37:25.994Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T21:41:37.794Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T21:44:56.329Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T21:49:03.618Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T22:07:52.810Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T22:40:15.253Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T23:00:52.909Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T23:05:01.327Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T23:10:51.285Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T23:12:54.781Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-04T23:20:36.400Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  }
+]

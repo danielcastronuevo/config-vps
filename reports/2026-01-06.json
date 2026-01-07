@@ -1,0 +1,96 @@
+[
+  {
+    "timestamp": "2026-01-06T00:49:21.847Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T01:27:54.936Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T01:36:55.916Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T01:38:33.971Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T01:46:23.828Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T01:57:23.540Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T02:04:33.128Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T02:12:59.810Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T02:15:56.495Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T02:32:26.788Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T17:12:51.973Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-06T17:12:56.191Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2026-01-06T17:13:21.474Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "2",
+        "1",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "2",
+          "1"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "A01",
+        "pareja2": "A04"
+      },
+      "duracion": "30 minutos",
+      "comienzo": "14:00",
+      "fin": "14:30",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Deuce / Advantage"
+    }
+  }
+]

@@ -1,0 +1,740 @@
+[
+  {
+    "timestamp": "2026-01-05T17:08:46.946Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T17:10:38.132Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T17:16:15.814Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:16:50.258Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:17:05.757Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2026-01-05T20:17:18.082Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T20:31:01.625Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:39:19.020Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:39:39.606Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T20:40:42.298Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:45:17.337Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:45:27.707Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T20:46:20.336Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:46:24.220Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T20:52:25.951Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:52:30.296Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T20:53:00.554Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:53:03.030Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T20:59:09.306Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T20:59:12.889Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:01:08.700Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:01:13.146Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:02:51.890Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:03:01.488Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:03:05.263Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:04:54.199Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:05:01.047Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:08:47.426Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:08:49.759Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:09:08.705Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:09:11.045Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "17:30",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:17:56.881Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:18:03.211Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "18:30",
+      "fin": "20:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:18:32.222Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:18:36.339Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "18:30",
+      "fin": "20:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:33:10.688Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:33:13.592Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "18:30",
+      "fin": "20:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T21:34:21.701Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T21:34:29.402Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "parejas": {
+        "pareja1": [
+          "1",
+          "2"
+        ],
+        "pareja2": [
+          "3",
+          "4"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "A02"
+      },
+      "duracion": "60 minutos",
+      "comienzo": "18:00",
+      "fin": "19:00",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Tradicional (impares)",
+      "tipoGames": "Punto de oro"
+    }
+  },
+  {
+    "timestamp": "2026-01-05T22:40:22.857Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T22:41:05.473Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2026-01-05T22:44:14.334Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T22:44:45.195Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T22:46:09.337Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T22:47:41.316Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2026-01-05T22:47:51.515Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2026-01-05T22:48:27.123Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T22:54:55.747Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-05T22:56:59.392Z",
+    "raspy_id": "F36B8CCA",
+    "tipo": "inicio_de_sesion"
+  }
+]

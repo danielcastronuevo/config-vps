@@ -1,0 +1,46 @@
+[
+  {
+    "timestamp": "2026-01-03T19:18:14.210Z",
+    "raspy_id": "AABB11",
+    "tipo": "inicio_de_sesion"
+  },
+  {
+    "timestamp": "2026-01-03T19:18:17.141Z",
+    "raspy_id": "AABB11",
+    "tipo": "pagina_cargada"
+  },
+  {
+    "timestamp": "2026-01-03T19:25:36.997Z",
+    "raspy_id": "AABB11",
+    "club": "altoque",
+    "tipo": "configuracion_enviada",
+    "partido": {
+      "jugadores": [
+        "Benjamín",
+        "Valentino",
+        "Facundo",
+        "Bautista"
+      ],
+      "parejas": {
+        "pareja1": [
+          "Benjamín",
+          "Valentino"
+        ],
+        "pareja2": [
+          "Facundo",
+          "Bautista"
+        ]
+      },
+      "pulseras": {
+        "pareja1": "B01",
+        "pareja2": "B04"
+      },
+      "duracion": "90 minutos",
+      "comienzo": "16:00",
+      "fin": "17:30",
+      "tiempoCalentamiento": "5 minutos",
+      "cambioDeLado": "Al finalizar cada SET",
+      "tipoGames": "Punto de oro"
+    }
+  }
+]

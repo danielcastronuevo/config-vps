@@ -103,6 +103,15 @@ const duracionSelect = document.getElementById("duracion");
 const finishBtn = document.querySelector("#step4 .finish");
 const inputInicio = document.getElementById("inicio-partido");
 const inputFin = document.getElementById("fin-partido");
+const modoTorneoCheckbox = document.getElementById("modo-torneo");
+const torneoConfig = document.getElementById("torneo-config");
+const horariosConfig = document.getElementById("horarios-config");
+const cardHorarios = document.getElementById("card-horarios");
+const cardDuracion = document.getElementById("card-duracion");
+const cardTorneoContainer = document.getElementById("card-torneo-container");
+const categoriaTorneoSelect = document.getElementById("categoria-torneo");
+const categoriaManualContainer = document.getElementById("categoria-manual-container");
+const categoriaManualInput = document.getElementById("categoria-manual");
 let pulserasDisponibles = {}; // guardamos lo que viene del JSON
 const step1Error = document.getElementById("step1-error");
 const inputsStep1 = [
@@ -147,7 +156,9 @@ let datosPartido = {
     games: ''
   },
   duracion: '',
-  comienzo: 'Hoy 20:00'
+  comienzo: 'Hoy 20:00',
+  modoTorneo: false,
+  categoriaTorneo: ''
 };
 
 // ===================== INICIALIZACIÓN =====================
@@ -238,10 +249,6 @@ function actualizarEstadoPulseras() {
 
 
 // ===================== CANCHA =====================
-function validateFinalizar() {
-  const step4Valido = duracionSelect.value;
-  finishBtn.disabled = !(step4Valido && !canchaOcupada);
-}
 
 
 
@@ -277,7 +284,7 @@ function validateStep1() {
   // jugadores
   inputsStep1.forEach(inp => {
     inp.classList.remove("error");
-    if(!inp.value.trim()) valid = false;
+    if (!inp.value.trim()) valid = false;
     values.push(inp.value.trim());
   });
 
@@ -285,16 +292,16 @@ function validateStep1() {
   const pulserasElegidas = [];
   selectsStep1.forEach(sel => {
     sel.classList.remove("error");
-    if(!sel.value) valid = false;
+    if (!sel.value) valid = false;
     pulserasElegidas.push(sel.value);
   });
 
   // jugadores duplicados
-  const duplicates = values.filter((v,i,a) => v && a.indexOf(v) !== i);
-  if(duplicates.length > 0){
+  const duplicates = values.filter((v, i, a) => v && a.indexOf(v) !== i);
+  if (duplicates.length > 0) {
     valid = false;
     inputsStep1.forEach(inp => {
-      if(duplicates.includes(inp.value.trim())) inp.classList.add("error");
+      if (duplicates.includes(inp.value.trim())) inp.classList.add("error");
     });
   }
 
@@ -341,8 +348,8 @@ function validateRadios(radios) {
 
 function validateStep3() {
   const valid = validateRadios(radiosCalentamiento) &&
-                validateRadios(radiosCambio) &&
-                validateRadios(radiosGames);
+    validateRadios(radiosCambio) &&
+    validateRadios(radiosGames);
   step3NextBtn.disabled = !valid;
 }
 
@@ -354,9 +361,9 @@ function updateDatosStep3() {
 }
 
 function populateStep3() {
-  radiosCalentamiento.forEach(r => r.checked = r.value===datosPartido.modosJuego.calentamiento);
-  radiosCambio.forEach(r => r.checked = r.value===datosPartido.modosJuego.cambio);
-  radiosGames.forEach(r => r.checked = r.value===datosPartido.modosJuego.games);
+  radiosCalentamiento.forEach(r => r.checked = r.value === datosPartido.modosJuego.calentamiento);
+  radiosCambio.forEach(r => r.checked = r.value === datosPartido.modosJuego.cambio);
+  radiosGames.forEach(r => r.checked = r.value === datosPartido.modosJuego.games);
   validateStep3();
 }
 
@@ -388,7 +395,7 @@ function generateTimeOptions() {
   else { validMinutes = 0; validHour += 1; }
   if (validHour >= 24) validHour -= 24;
 
-  const defaultTime = `${validHour.toString().padStart(2,'0')}:${validMinutes.toString().padStart(2,'0')}`;
+  const defaultTime = `${validHour.toString().padStart(2, '0')}:${validMinutes.toString().padStart(2, '0')}`;
 
   const options = [];
   // Generar opciones: media hora antes hasta 1 hora adelante
@@ -399,7 +406,7 @@ function generateTimeOptions() {
     let m = totalMinutes % 60;
     if (h < 0) h += 24;
     if (h >= 24) h -= 24;
-    options.push(`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`);
+    options.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
   }
 
   return { options, defaultTime };
@@ -443,10 +450,10 @@ function updateInicioSelect() {
     el.value = opt;
     el.textContent = opt;
     // solo seleccionamos si es la selección previa válida o si no hay previa
-    if(selectionStillValid) {
-      if(opt === previousValue) el.selected = true;
+    if (selectionStillValid) {
+      if (opt === previousValue) el.selected = true;
     } else {
-      if(opt === defaultTime) el.selected = true;
+      if (opt === defaultTime) el.selected = true;
     }
     inputInicio.appendChild(el);
   });
@@ -459,14 +466,14 @@ function updateInicioSelect() {
 
 
 function updateFin() {
-  const [h, m] = inputInicio.value.split(':').map(Number) || [0,0];
+  const [h, m] = inputInicio.value.split(':').map(Number) || [0, 0];
   const inicio = new Date();
   inicio.setHours(h, m, 0, 0);
 
   let fin = new Date(inicio);
-  if(duracionSelect.value) {
-    fin = new Date(inicio.getTime() + parseInt(duracionSelect.value)*60000);
-    inputFin.value = `${fin.getHours().toString().padStart(2,'0')}:${fin.getMinutes().toString().padStart(2,'0')}`;
+  if (duracionSelect.value) {
+    fin = new Date(inicio.getTime() + parseInt(duracionSelect.value) * 60000);
+    inputFin.value = `${fin.getHours().toString().padStart(2, '0')}:${fin.getMinutes().toString().padStart(2, '0')}`;
   } else {
     inputFin.value = '';
   }
@@ -486,7 +493,8 @@ setInterval(updateInicioSelect, 60000); // cada minuto
 
 // Validación de Step 4
 function validateStep4() {
-  if(duracionSelect.value){
+  const isTorneo = modoTorneoCheckbox.checked;
+  if (duracionSelect.value || isTorneo) {
     step4Error.style.display = "none";
     duracionSelect.classList.remove("error");
   } else {
@@ -494,6 +502,12 @@ function validateStep4() {
     duracionSelect.classList.add("error");
   }
   validateFinalizar(); // habilita/deshabilita botón Finalizar según cancha y duración
+}
+
+function validateFinalizar() {
+  const isTorneo = modoTorneoCheckbox.checked;
+  const step4Valido = duracionSelect.value || isTorneo;
+  finishBtn.disabled = !(step4Valido && !canchaOcupada);
 }
 
 // Poblado inicial de Step 4
@@ -521,18 +535,51 @@ inputInicio.addEventListener('change', () => {
 setInterval(updateInicioSelect, 60000);
 updateInicioSelect(); // inicial al cargar
 
+// ===================== EVENTOS TORNEO =====================
+modoTorneoCheckbox.addEventListener("change", () => {
+  const isTorneo = modoTorneoCheckbox.checked;
+  torneoConfig.style.display = isTorneo ? "block" : "none";
+
+  // Efecto visual y deshabilitación en los contenedores
+  if (isTorneo) {
+    cardTorneoContainer.classList.add("active");
+    cardHorarios.style.opacity = "0.4";
+    cardHorarios.style.pointerEvents = "none";
+    cardDuracion.style.opacity = "0.4";
+    cardDuracion.style.pointerEvents = "none";
+
+    duracionSelect.disabled = true;
+    inputInicio.disabled = true;
+  } else {
+    cardTorneoContainer.classList.remove("active");
+    cardHorarios.style.opacity = "1";
+    cardHorarios.style.pointerEvents = "auto";
+    cardDuracion.style.opacity = "1";
+    cardDuracion.style.pointerEvents = "auto";
+
+    duracionSelect.disabled = false;
+    inputInicio.disabled = false;
+  }
+
+  validateStep4();
+});
+
+categoriaTorneoSelect.addEventListener("change", () => {
+  categoriaManualContainer.style.display = categoriaTorneoSelect.value === "MANUAL" ? "block" : "none";
+});
+
 // ===================== NAVEGACIÓN =====================
-function showStep(index){
-  steps.forEach((s,i)=>s.classList.toggle("active", i===index));
+function showStep(index) {
+  steps.forEach((s, i) => s.classList.toggle("active", i === index));
   current = index;
-  if(index===0) populateStep1();
-//  if(index===1) populateStep2(); //SI LA REACTIVAS FIJATE LOS INDICES
-  if(index===1) populateStep3();
-  if(index===2) populateStep4();
+  if (index === 0) populateStep1();
+  //  if(index===1) populateStep2(); //SI LA REACTIVAS FIJATE LOS INDICES
+  if (index === 1) populateStep3();
+  if (index === 2) populateStep4();
 }
 
-document.querySelectorAll(".next").forEach(btn => btn.addEventListener("click", ()=>{ if(current<steps.length-1) showStep(current+1); }));
-document.querySelectorAll(".prev").forEach(btn => btn.addEventListener("click", ()=>{ if(current>0) showStep(current-1); }));
+document.querySelectorAll(".next").forEach(btn => btn.addEventListener("click", () => { if (current < steps.length - 1) showStep(current + 1); }));
+document.querySelectorAll(".prev").forEach(btn => btn.addEventListener("click", () => { if (current > 0) showStep(current - 1); }));
 
 // ==================================================
 // FINALIZAR Y ENVIAR AL SERVIDOR
@@ -541,6 +588,12 @@ document.querySelectorAll(".prev").forEach(btn => btn.addEventListener("click", 
 finishBtn.addEventListener("click", () => {
 
   updateFin();
+
+  const isTorneo = modoTorneoCheckbox.checked;
+  let categoriaFinal = "";
+  if (isTorneo) {
+    categoriaFinal = categoriaTorneoSelect.value === "MANUAL" ? categoriaManualInput.value.trim() : categoriaTorneoSelect.value;
+  }
 
   const datosCompat = {
     jugadores: [
@@ -584,6 +637,8 @@ finishBtn.addEventListener("click", () => {
         default: return "";
       }
     })(),
+    modoTorneo: isTorneo,
+    categoriaTorneo: categoriaFinal,
     ordenDeSaque: ["", "", "", ""],
     duracion: `${datosPartido.duracion} minutos`,
     comienzo: datosHorarios.inicioTexto,
@@ -618,22 +673,22 @@ finishBtn.addEventListener("click", () => {
 sendToServer = (datosPartido) => {
   // Enviar los datos al servidor para que los reenvíe a la Raspy
   fetch('/api/send_raspy', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-          raspy_id: RASPY_ID, //ACÁ MANDAMOS A LA ID DE LA RASPY
-          datos: datosPartido
-      })
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      raspy_id: RASPY_ID, //ACÁ MANDAMOS A LA ID DE LA RASPY
+      datos: datosPartido
+    })
   })
-  .then(response => response.json())
-  .then(data => {
+    .then(response => response.json())
+    .then(data => {
       console.log('Respuesta del servidor:', data);
-      if(data.error) alert(data.error);
-  })
-  .catch(error => {
+      if (data.error) alert(data.error);
+    })
+    .catch(error => {
       console.error('Error enviando datos al servidor:', error);
       alert("No se pudo enviar la configuración. ¿El servidor está corriendo?");
-  });
+    });
 };
 
 // ==================================================
@@ -653,7 +708,7 @@ let feedbackAbiertoenSesion = false; // Rastrear si fue abierto en esta sesión
 feedbackBubble.addEventListener('click', () => {
   feedbackModal.style.display = 'flex';
   feedbackText.focus();
-  
+
   // Si es la primera vez que se abre, esconder el "!"
   if (!feedbackAbiertoenSesion) {
     feedbackBubble.classList.add('feedback-opened');
@@ -698,20 +753,20 @@ feedbackSend.addEventListener('click', () => {
       mensaje: mensaje
     })
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log('✅ Feedback enviado:', data);
-    alert('¡Gracias por el apoyo!');
-    cerrarFeedbackModal();
-    feedbackSend.disabled = false;
-    feedbackSend.textContent = 'Enviar';
-  })
-  .catch(error => {
-    console.error('Error enviando feedback:', error);
-    alert('No se pudo enviar el feedback. Intenta de nuevo.');
-    feedbackSend.disabled = false;
-    feedbackSend.textContent = 'Enviar';
-  });
+    .then(response => response.json())
+    .then(data => {
+      console.log('✅ Feedback enviado:', data);
+      alert('¡Gracias por el apoyo!');
+      cerrarFeedbackModal();
+      feedbackSend.disabled = false;
+      feedbackSend.textContent = 'Enviar';
+    })
+    .catch(error => {
+      console.error('Error enviando feedback:', error);
+      alert('No se pudo enviar el feedback. Intenta de nuevo.');
+      feedbackSend.disabled = false;
+      feedbackSend.textContent = 'Enviar';
+    });
 });
 
 // Permitir enviar con Ctrl+Enter o Cmd+Enter
