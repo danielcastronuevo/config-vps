@@ -4,6 +4,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const RASPY_ID = urlParams.get("id");
 const CLUB = urlParams.get("club") || "la-esquina"; // Placeholder por defecto
+const CANCHA = urlParams.get("cancha") || "-";
 
 if (!RASPY_ID) {
   console.warn("⚠️ No se recibió el ID de la Raspy desde los parámetros de URL");
@@ -183,6 +184,12 @@ window.addEventListener("DOMContentLoaded", () => {
       // Fallback a la-esquina si el club no existe
       clubLogoImg.src = 'imgs/clubs/la-esquina.png';
     };
+  }
+
+  // Establecer número de cancha
+  const canchaNumDisplay = document.getElementById("cancha-num");
+  if (canchaNumDisplay) {
+    canchaNumDisplay.textContent = CANCHA;
   }
 
   // Deshabilitar botón Step1 por defecto
