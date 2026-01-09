@@ -720,7 +720,12 @@ sendToServer = (datosPartido) => {
     .then(response => response.json())
     .then(data => {
       console.log('Respuesta del servidor:', data);
-      if (data.error) alert(data.error);
+      if (data.error) {
+        alert(data.error);
+      } else {
+        // 🎉 Mostrar modal de éxito
+        document.getElementById("success-modal").style.display = "flex";
+      }
     })
     .catch(error => {
       console.error('Error enviando datos al servidor:', error);
@@ -805,6 +810,58 @@ feedbackSend.addEventListener('click', () => {
       feedbackSend.textContent = 'Enviar';
     });
 });
+
+// ==================================================
+// REINICIAR FORMULARIO
+// ==================================================
+
+const btnReset = document.getElementById("btn-reset");
+
+function resetForm() {
+  // 1. Ocultar modal de éxito
+  document.getElementById("success-modal").style.display = "none";
+
+  // 2. Resetear variables de datos
+  datosPartido = {
+    jugadores: {
+      pareja1: { j1: '', j2: '', pulsera: '' },
+      pareja2: { j1: '', j2: '', pulsera: '' }
+    },
+    sacadores: { pareja1: '', pareja2: '' },
+    modosJuego: { calentamiento: '', cambio: '', games: '' },
+    duracion: '',
+    comienzo: 'Hoy 20:00',
+    modoTorneo: false,
+    categoriaTorneo: ''
+  };
+
+  // 3. Resetear inputs del DOM
+  document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+  document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+
+  // 4. Resetear UI específica (Modo Torneo)
+  modoTorneoCheckbox.checked = false;
+  torneoConfig.style.display = "none";
+  cardTorneoContainer.classList.remove("active");
+  cardHorarios.style.opacity = "1";
+  cardHorarios.style.pointerEvents = "auto";
+  cardDuracion.style.opacity = "1";
+  cardDuracion.style.pointerEvents = "auto";
+  duracionSelect.disabled = false;
+  inputInicio.disabled = false;
+  categoriaManualContainer.style.display = "none";
+
+  // 5. Volver al primer paso
+  showStep(0);
+
+  // 6. Validaciones básicas iniciales
+  validateStep1();
+}
+
+if (btnReset) {
+  btnReset.addEventListener("click", resetForm);
+}
 
 // Permitir enviar con Ctrl+Enter o Cmd+Enter
 feedbackText.addEventListener('keydown', (e) => {
