@@ -222,7 +222,7 @@ function llenarPulseras() {
     Object.entries(pulserasDisponibles).forEach(([nombre, mac]) => {
       const opt = document.createElement("option");
       opt.value = nombre;
-      opt.textContent = `${nombre} (${mac})`;
+      opt.textContent = nombre;
       sel.appendChild(opt);
     });
   });
@@ -238,13 +238,13 @@ function actualizarEstadoPulseras() {
       if (opt.value) { // No deshabilitar la opción vacía
         if (pulserasEnUsoActual.includes(opt.value)) {
           opt.disabled = true;
-          opt.textContent = opt.textContent.split('(')[0].trim() + ' (EN USO) (' + opt.textContent.split('(')[1];
+          opt.textContent = `${opt.value} (EN USO)`;
         } else {
           opt.disabled = false;
           // Restaurar nombre original sin "(EN USO)"
           const nombre = opt.value;
           const mac = pulserasDisponibles[nombre];
-          opt.textContent = `${nombre} (${mac})`;
+          opt.textContent = nombre;
         }
       }
     });
